@@ -1,13 +1,13 @@
 # Former
 
-A forum app built with&ensp;<img src="https://img.icons8.com/?size=100&id=kg46nzoJrmTR&format=png&color=000000" style="vertical-align: middle;" width="16" height="16" alt="Express.js Logo"> Express.js and&ensp;<img src="https://img.icons8.com/?size=100&id=122637&format=png&color=61DBFB" style="vertical-align: middle;" width="16" height="16" alt="React Logo"> React ran in&ensp;<img src="https://img.icons8.com/?size=100&id=cdYUlRaag9G9&format=png&color=000000" style="vertical-align: middle;" width="16" height="16" alt="Docker Logo"> Docker using Docker Compose
+A forum app built with&ensp;<img src="https://img.icons8.com/?size=100&id=kg46nzoJrmTR&format=png&color=ffffff" style="vertical-align: middle;" width="16" height="16" alt="Express.js Logo"> Express.js and&ensp;<img src="https://img.icons8.com/?size=100&id=122637&format=png&color=61DBFB" style="vertical-align: middle;" width="16" height="16" alt="React Logo"> React ran in&ensp;<img src="https://img.icons8.com/?size=100&id=cdYUlRaag9G9&format=png&color=000000" style="vertical-align: middle;" width="16" height="16" alt="Docker Logo"> Docker using Docker Compose
 
 ---
 
 ## Features
 
 - Backend, database, and frontend can all be built and started using a single Docker Compose command
-- Backend is built in&ensp;<img src="https://img.icons8.com/?size=100&id=hsPbhkOH4FMe&format=png&color=000000" style="vertical-align: middle;" width="16" height="16" alt="Node.js Logo"> Node.js using the&ensp;<img src="https://img.icons8.com/?size=100&id=kg46nzoJrmTR&format=png&color=000000" style="vertical-align: middle;" width="16" height="16" alt="Express.js Logo"> Express.js framework and the&ensp;<img src="https://img.icons8.com/?size=100&id=zJh5Gyrd6ZKu&format=png&color=000000" style="vertical-align: middle;" width="16" height="16" alt="Prisma ORM Logo"> Prisma ORM
+- Backend is built in&ensp;<img src="https://img.icons8.com/?size=100&id=hsPbhkOH4FMe&format=png&color=000000" style="vertical-align: middle;" width="16" height="16" alt="Node.js Logo"> Node.js using the&ensp;<img src="https://img.icons8.com/?size=100&id=kg46nzoJrmTR&format=png&color=ffffff" style="vertical-align: middle;" width="16" height="16" alt="Express.js Logo"> Express.js framework and the&ensp;<img src="https://img.icons8.com/?size=100&id=zJh5Gyrd6ZKu&format=png&color=000000" style="vertical-align: middle;" width="16" height="16" alt="Prisma ORM Logo"> Prisma ORM
 - <img src="https://img.icons8.com/?size=100&id=36440&format=png&color=336791" style="vertical-align: middle;" width="16" height="16" alt="PostgreSQL Logo"> PostgreSQL is used as the database
 - Frontend is built in&ensp;<img src="https://img.icons8.com/?size=100&id=122637&format=png&color=61DBFB" style="vertical-align: middle;" width="16" height="16" alt="React Logo"> React using&ensp;<img src="https://img.icons8.com/?size=100&id=4PiNHtUJVbLs&format=png&color=000000" style="vertical-align: middle;" width="16" height="16" alt="Tailwind cSS Logo"> Tailwind CSS for styling
 - Fully implemented user sign up and log in system

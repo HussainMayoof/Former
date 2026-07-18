@@ -1,2 +1,14 @@
 services:
-  
+  postgres:
+    image: postgres:18.4-alpine
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: former-dev
+    volumes:
+      - postgres-data-dev:/var/lib/postgresql
+    container_name: former-postgres-dev
+
+volumes:
+  postgres-data-dev:

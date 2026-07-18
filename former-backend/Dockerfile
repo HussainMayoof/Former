@@ -32,9 +32,10 @@ WORKDIR /usr/src/app
 
 COPY --from=build-stage --chown=node:node /usr/src/app/dist ./dist
 COPY --from=build-stage --chown=node:node /usr/src/app/package*.json ./
+COPY --from=build-stage --chown=node:node /usr/src/app/prisma ./prisma
 
 RUN npm ci --omit=dev
 
 USER node
 
-CMD ["npm", "start"]
+CMD ["sh", "-c", "npx prisma migrate deploy && npm start"]

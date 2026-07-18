@@ -14,11 +14,19 @@ export const tokenExtractor = (
     }
 
     const token = authorization.substring(7);
+
+    let decodedToken;
     try {
-        req.token = jwt.verify(token, JWT_SECRET);
+        decodedToken = jwt.verify(token, JWT_SECRET);
     } catch {
         return res.status(401).json({ error: 'Invalid token' });
     }
+
+    if (typeof decodedToken === 'string') {
+        return res.status(401).json({ error: 'Invalid token' });
+    }
+
+    req.token = decodedToken;
 
     return next();
 };

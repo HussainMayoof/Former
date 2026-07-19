@@ -23,12 +23,12 @@ The project requires `.env` files in both the `former-backend` and `former-front
 ### Backend Variables
 
 - `PORT` — the port that the server runs on, its value is `3000` by default if unset
-- `DATABASE_URL` — the URL of the database
+- `DATABASE_URL` — the URL of the database e.g. `postgresql://postgres:postgres@localhost:5432/former`
 - `JWT_SECRET` — the JSON Web Token secret
 
 ### Frontend Variables
 
-- None for now
+- `VITE_API_URL` — the URL to the backend e.g. `http://localhost:3000/api`
 
 ---
 
@@ -40,6 +40,7 @@ The project requires `.env` files in both the `former-backend` and `former-front
 >2. [Docker Desktop](https://www.docker.com/products/docker-desktop/)
 
 - At the project root, run `docker compose -f docker-compose.dev.yml up` to start up the database in docker
+- Run `npx prisma generate dev` in the `former-backend` directory
 - Run `npm run dev` in both the `former-backend` and `former-frontend` directories
 - The project will be available on http://localhost:5173/
 

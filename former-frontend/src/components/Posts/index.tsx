@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
 import { getAllPosts } from '../../services/PostService.ts';
-import type { Post } from '../../types.ts';
+import type { PostWithUser } from '../../types.ts';
 import { Link } from 'react-router';
 
 const Posts = () => {
-    const [posts, setPosts] = useState<Post[]>([]);
+    const [posts, setPosts] = useState<PostWithUser[]>([]);
 
     useEffect(() => {
         const fetchPosts = async () => {

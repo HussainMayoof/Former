@@ -8,14 +8,32 @@ const PostsRouter = Router();
 
 //Get all posts
 PostsRouter.get('/', async (_req, res) => {
-    const posts = await prisma.post.findMany();
+    const posts = await prisma.post.findMany({
+        include: {
+            user: {
+                select: {
+                    displayName: true,
+                },
+            },
+        },
+    });
     res.json(posts);
 });
 
 //Get one post
 PostsRouter.get('/:id', async (req, res) => {
     const id = Number(req.params.id);
-    const post = await prisma.post.findUnique({ where: { id } });
+    const post = await prisma.post.findUnique({
+        where: { id },
+        include: {
+            user: {
+                select: {
+                    displayName: true,
+                },
+            },
+        },
+    });
+
     res.json(post);
 });
 

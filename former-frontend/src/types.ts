@@ -1,3 +1,11 @@
-import type { Post } from '../../former-backend/src/generated/prisma/client.ts';
+import { Prisma } from '../../former-backend/src/generated/prisma/client.ts';
 
-export type { Post };
+export type PostWithUser = Prisma.PostGetPayload<{
+    include: {
+        user: {
+            select: {
+                displayName: true;
+            };
+        };
+    };
+}>;

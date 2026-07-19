@@ -1,13 +1,14 @@
 import { useEffect, useState } from 'react';
-import PostService from '../../services/PostService.ts';
+import { getAllPosts } from '../../services/PostService.ts';
 import type { Post } from '../../types.ts';
+import { Link } from 'react-router';
 
 const Posts = () => {
     const [posts, setPosts] = useState<Post[]>([]);
 
     useEffect(() => {
         const fetchPosts = async () => {
-            setPosts(await PostService.getAll());
+            setPosts(await getAllPosts());
         };
 
         fetchPosts();
@@ -22,7 +23,9 @@ const Posts = () => {
             <h1>Posts:</h1>
             <ul className="list-disc pl-5">
                 {posts.map((post) => (
-                    <li key={post.id}>{post.title}</li>
+                    <li key={post.id}>
+                        <Link to={`/posts/${post.id}`}>{post.title}</Link>
+                    </li>
                 ))}
             </ul>
         </div>

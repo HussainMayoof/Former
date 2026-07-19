@@ -2,6 +2,7 @@ import Header from './components/Header';
 import { Route, Routes } from 'react-router';
 import Posts from './components/Posts';
 import Users from './components/Users';
+import Post from './components/Post';
 
 const App = () => {
     return (
@@ -13,6 +14,7 @@ const App = () => {
             <Routes>
                 <Route path="/" element={<Posts />} />
                 <Route path="/users" element={<Users />} />
+                <Route path="/posts/:id" element={<Post />} />
             </Routes>
         </div>
     );

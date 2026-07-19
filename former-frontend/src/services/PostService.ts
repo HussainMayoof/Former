@@ -2,11 +2,15 @@ import type { Post } from '../types';
 
 const apiURL = import.meta.env.VITE_API_URL;
 
-const getAll = async () => {
+export const getAllPosts = async () => {
     const response = await fetch(`${apiURL}/posts`);
     const posts: Post[] = await response.json();
-    console.log(posts);
     return posts;
 };
 
-export default { getAll };
+export const getPost = async (id: string) => {
+    const response = await fetch(`${apiURL}/posts/${id}`);
+    const post: Post = await response.json();
+    console.log(post);
+    return post;
+};

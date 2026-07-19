@@ -12,6 +12,13 @@ PostsRouter.get('/', async (_req, res) => {
     res.json(posts);
 });
 
+//Get one post
+PostsRouter.get('/:id', async (req, res) => {
+    const id = Number(req.params.id);
+    const post = await prisma.post.findUnique({ where: { id } });
+    res.json(post);
+});
+
 //Create a new post
 PostsRouter.post('/', tokenExtractor, async (req: TokenRequest, res) => {
     const { title, content = null } = PostParams.parse(req.body);

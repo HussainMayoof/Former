@@ -29,6 +29,7 @@ UserRouter.post('/', async (req, res) => {
         data: {
             username,
             passwordHash,
+            displayName: username,
         },
     });
 

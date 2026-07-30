@@ -2,6 +2,7 @@ import { Link, useParams } from 'react-router';
 import { useEffect, useState } from 'react';
 import { getPost } from '../../services/PostService.ts';
 import type { PostWithUser } from '../../types.ts';
+import UnderlinedLink from '../shared/UnderlinedLink';
 
 const Post = () => {
     const id = useParams().id;
@@ -39,11 +40,11 @@ const Post = () => {
             )}
             <p className="font-thin text-sm mb-2">
                 Posted by{' '}
-                <Link to="/" className="font-medium hover:underline">
-                    {post.user.displayName
-                        ? post.user.displayName
-                        : post.user.username}
-                </Link>
+                <UnderlinedLink to="/">
+                    <p className="font-medium hover:text-gray-400 duration-200">
+                        {post.user.displayName}
+                    </p>
+                </UnderlinedLink>
             </p>
             <hr />
 

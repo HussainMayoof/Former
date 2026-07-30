@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { getAllPosts } from '../../services/PostService.ts';
 import type { PostWithUser } from '../../types.ts';
-import { Link } from 'react-router';
+import SinglePost from './SinglePost.tsx';
 
 const Posts = () => {
     const [posts, setPosts] = useState<PostWithUser[]>([]);
@@ -20,14 +20,11 @@ const Posts = () => {
 
     return (
         <div>
-            <h1>Posts:</h1>
-            <ul className="list-disc pl-5">
+            <div className="flex flex-col items-center mt-4">
                 {posts.map((post) => (
-                    <li key={post.id}>
-                        <Link to={`/posts/${post.id}`}>{post.title}</Link>
-                    </li>
+                    <SinglePost key={post.id} post={post} />
                 ))}
-            </ul>
+            </div>
         </div>
     );
 };

@@ -39,7 +39,7 @@ PostsRouter.get('/:id', async (req, res) => {
 
 //Create a new post
 PostsRouter.post('/', tokenExtractor, async (req: TokenRequest, res) => {
-    const { title, content = null } = PostParams.parse(req.body);
+    const { title, content, tags } = PostParams.parse(req.body);
     if (!req.token) {
         return res.status(401).json({ error: 'Unauthorized' });
     }
@@ -48,6 +48,7 @@ PostsRouter.post('/', tokenExtractor, async (req: TokenRequest, res) => {
         data: {
             title,
             content,
+            tags,
             userId: req.token.id,
         },
     });

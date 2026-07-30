@@ -14,10 +14,12 @@ export const UserCreateInput = z.object({
 export const PostParams = z.object({
     title: z.string().min(1).max(50),
     content: z.string().max(200).optional(),
+    tags: z.array(z.string()).max(10).optional(),
 });
 
 export const PostCreateInput = z.object({
     title: z.string().min(1).max(50),
-    content: z.string().max(200).nullable(),
+    content: z.string().max(200).optional(),
+    tags: z.array(z.string()).max(10).optional(),
     userId: z.number(),
 }) satisfies z.Schema<Prisma.PostUncheckedCreateInput>;

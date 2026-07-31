@@ -1,2 +1,14 @@
 @import 'tailwindcss';
 @custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
+
+.active {
+    @apply text-gray-400;
+}
+
+.input {
+    @apply border border-gray-300 rounded-xl p-3 focus:outline-none;
+}
+
+.submit-button {
+    @apply rounded-xl cursor-pointer bg-blue-400 py-2 flex-1 hover:bg-blue-500 duration-200;
+}

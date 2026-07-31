@@ -3,6 +3,8 @@ import { Route, Routes } from 'react-router';
 import Posts from './components/Posts';
 import Users from './components/Users';
 import Post from './components/Post';
+import Login from './components/Login';
+import Register from './components/Register';
 
 const App = () => {
     return (
@@ -15,6 +17,8 @@ const App = () => {
                 <Route path="/" element={<Posts />} />
                 <Route path="/users" element={<Users />} />
                 <Route path="/posts/:id" element={<Post />} />
+                <Route path="/login" element={<Login />} />
+                <Route path="/register" element={<Register />} />
             </Routes>
         </div>
     );

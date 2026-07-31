@@ -11,6 +11,7 @@ A forum app built with&ensp;<img src="https://img.icons8.com/?size=100&id=kg46nz
 - <img src="https://img.icons8.com/?size=100&id=36440&format=png&color=336791" style="vertical-align: middle;" width="16" height="16" alt="PostgreSQL Logo"> PostgreSQL is used as the database
 - Frontend is built in&ensp;<img src="https://img.icons8.com/?size=100&id=122637&format=png&color=61DBFB" style="vertical-align: middle;" width="16" height="16" alt="React Logo"> React using&ensp;<img src="https://img.icons8.com/?size=100&id=4PiNHtUJVbLs&format=png&color=000000" style="vertical-align: middle;" width="16" height="16" alt="Tailwind cSS Logo"> Tailwind CSS for styling
 - <img src="https://reactrouter.com/_brand/react-router-brand-assets/logo/Dark.png" style="vertical-align: middle;" width="16" alt="PostgreSQL Logo"> React Router is used for frontend routing
+- <img src="https://user-images.githubusercontent.com/958486/218346783-72be5ae3-b953-4dd7-b239-788a882fdad6.svg" style="vertical-align: middle;" width="16" height="16" alt="Zustand Logo"> Zustand is used for store management in the frontend
 - Fully implemented user sign up and log in system
 - Posts are shown to users using a basic recommendation algorithm
 - Users can vote on posts, and users earn points called 'Formits' based on their posts' scores

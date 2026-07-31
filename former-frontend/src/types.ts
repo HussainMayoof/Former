@@ -9,3 +9,16 @@ export type PostWithUser = Prisma.PostGetPayload<{
         };
     };
 }>;
+
+export interface AuthenticatedUser {
+    username: string;
+    token: string;
+}
+
+export interface UserState {
+    user?: AuthenticatedUser;
+    actions: {
+        login: (username: string, password: string) => Promise<void>;
+        logout: () => void;
+    };
+}

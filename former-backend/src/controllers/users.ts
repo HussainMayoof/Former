@@ -2,6 +2,8 @@ import { Router } from 'express';
 import bcrypt from 'bcrypt';
 import prisma from '../util/prisma.js';
 import { UserCreateParams } from '../util/zod.js';
+import jwt from 'jsonwebtoken';
+import { JWT_SECRET } from '../util/config.js';
 
 const UserRouter = Router();
 
@@ -33,7 +35,12 @@ UserRouter.post('/', async (req, res) => {
         },
     });
 
-    res.json(user);
+    const { id } = user;
+    const token = jwt.sign({ id }, JWT_SECRET, {
+        expiresIn: '24h',
+    });
+
+    return res.status(200).json({ username, token });
 });
 
 export default UserRouter;

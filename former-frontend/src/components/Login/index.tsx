@@ -10,7 +10,7 @@ const Login = () => {
     const navigate = useNavigate();
     const { login } = useUserActions();
 
-    const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    const handleFormSubmit = async (e: React.SubmitEvent<HTMLFormElement>) => {
         e.preventDefault();
         try {
             await login(username, password);

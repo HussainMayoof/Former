@@ -19,6 +19,7 @@ export interface UserState {
     user?: AuthenticatedUser;
     actions: {
         login: (username: string, password: string) => Promise<void>;
+        register: (username: string, password: string) => Promise<void>;
         logout: () => void;
     };
 }

@@ -1,6 +1,9 @@
 import { create } from 'zustand';
 import type { UserState } from './types.ts';
-import { login as loginRequest } from './services/UserService.ts';
+import {
+    login as loginRequest,
+    register as registerRequest,
+} from './services/UserService.ts';
 import { persist } from 'zustand/middleware';
 
 const useUserStore = create<UserState>()(
@@ -10,6 +13,14 @@ const useUserStore = create<UserState>()(
             actions: {
                 login: async (username, password) => {
                     const response = await loginRequest(username, password);
+                    if (!response.error) {
+                        set({ user: response });
+                    } else {
+                        throw new Error(response.error);
+                    }
+                },
+                register: async (username, password) => {
+                    const response = await registerRequest(username, password);
                     if (!response.error) {
                         set({ user: response });
                     } else {

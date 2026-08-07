@@ -1,4 +1,4 @@
-import type { PostWithUser } from '../types';
+import type { PostWithUser, PostWithUserAndTags } from '../types';
 
 const apiURL = import.meta.env.VITE_API_URL;
 
@@ -10,6 +10,6 @@ export const getAllPosts = async () => {
 
 export const getPost = async (id: string) => {
     const response = await fetch(`${apiURL}/posts/${id}`);
-    const post: PostWithUser = await response.json();
+    const post: PostWithUserAndTags = await response.json();
     return post;
 };

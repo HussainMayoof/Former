@@ -2,7 +2,7 @@ import { Router } from 'express';
 import prisma from '../util/prisma.js';
 import { tokenExtractor } from '../util/middleware.js';
 import type { TokenRequest } from '../types.js';
-import { PostParams } from '../util/zod.js';
+import { PostCreateInput, PostParams } from '../util/zod.js';
 
 const PostsRouter = Router();
 
@@ -31,6 +31,11 @@ PostsRouter.get('/:id', async (req, res) => {
                     displayName: true,
                 },
             },
+            tags: {
+                select: {
+                    tagName: true,
+                },
+            },
         },
     });
 
@@ -39,16 +44,26 @@ PostsRouter.get('/:id', async (req, res) => {
 
 //Create a new post
 PostsRouter.post('/', tokenExtractor, async (req: TokenRequest, res) => {
-    const { title, content, tags } = PostParams.parse(req.body);
+    const body = PostParams.parse(req.body);
     if (!req.token) {
         return res.status(401).json({ error: 'Unauthorized' });
     }
+
+    const { title, content, tags } = PostCreateInput.parse({
+        ...body,
+        userId: req.token.id,
+    });
 
     const post = await prisma.post.create({
         data: {
             title,
             content,
-            tags,
+            tags: {
+                connectOrCreate: (tags ?? []).map((tagName) => ({
+                    where: { tagName: tagName.toLowerCase() },
+                    create: { tagName: tagName.toLowerCase() },
+                })),
+            },
             userId: req.token.id,
         },
     });

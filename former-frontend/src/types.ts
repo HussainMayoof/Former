@@ -10,6 +10,21 @@ export type PostWithUser = Prisma.PostGetPayload<{
     };
 }>;
 
+export type PostWithUserAndTags = Prisma.PostGetPayload<{
+    include: {
+        user: {
+            select: {
+                displayName: true;
+            };
+        };
+        tags: {
+            select: {
+                tagName: true;
+            };
+        };
+    };
+}>;
+
 export interface AuthenticatedUser {
     username: string;
     token: string;

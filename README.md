@@ -1,6 +1,6 @@
 # Former
 
-A forum app built with&ensp;<img src="https://img.icons8.com/?size=100&id=kg46nzoJrmTR&format=png&color=ffffff" style="vertical-align: middle;" width="16" height="16" alt="Express.js Logo"> Express.js and&ensp;<img src="https://img.icons8.com/?size=100&id=122637&format=png&color=61DBFB" style="vertical-align: middle;" width="16" height="16" alt="React Logo"> React ran in&ensp;<img src="https://img.icons8.com/?size=100&id=cdYUlRaag9G9&format=png&color=000000" style="vertical-align: middle;" width="16" height="16" alt="Docker Logo"> Docker using Docker Compose
+A social media app built with&ensp;<img src="https://img.icons8.com/?size=100&id=kg46nzoJrmTR&format=png&color=ffffff" style="vertical-align: middle;" width="16" height="16" alt="Express.js Logo"> Express.js and&ensp;<img src="https://img.icons8.com/?size=100&id=122637&format=png&color=61DBFB" style="vertical-align: middle;" width="16" height="16" alt="React Logo"> React ran in&ensp;<img src="https://img.icons8.com/?size=100&id=cdYUlRaag9G9&format=png&color=000000" style="vertical-align: middle;" width="16" height="16" alt="Docker Logo"> Docker using Docker Compose
 
 ---
 
@@ -42,8 +42,9 @@ The project requires `.env` files in both the `former-backend` and `former-front
 >2. [Docker Desktop](https://www.docker.com/products/docker-desktop/)
 
 - At the project root, run `docker compose -f docker-compose.dev.yml up` to start up the database in docker
+- Run `npm i` in both the `former-backend` and `former-frontend` directories to install dependencies
 - Run `npx prisma generate dev` in the `former-backend` directory
-- Run `npm run dev` in both the `former-backend` and `former-frontend` directories
+- Run `npm run dev` in both the `former-backend` and `former-frontend` directories to start the dev backend and frontend servers
 - The project will be available on http://localhost:5173/
 
 ---

@@ -1,12 +1,12 @@
 import { Link, useParams } from 'react-router';
 import { useEffect, useState } from 'react';
 import { getPost } from '../../services/PostService.ts';
-import type { PostWithUser } from '../../types.ts';
+import type { PostWithUserAndTags } from '../../types.ts';
 import UnderlinedLink from '../shared/UnderlinedLink';
 
 const Post = () => {
     const id = useParams().id;
-    const [post, setPost] = useState<PostWithUser>();
+    const [post, setPost] = useState<PostWithUserAndTags>();
 
     useEffect(() => {
         const fetchPost = async () => {
@@ -30,22 +30,22 @@ const Post = () => {
                     {post.tags.map((tag) => (
                         <Link
                             to="/"
-                            key={tag}
+                            key={tag.tagName}
                             className="bg-blue-400 hover:bg-blue-500 transition-colors duration-300 rounded-sm py-1 px-1.5 text-sm text-black"
                         >
-                            {tag}
+                            {tag.tagName}
                         </Link>
                     ))}
                 </div>
             )}
-            <p className="font-thin text-sm mb-2">
+            <div className="font-thin text-sm mb-2">
                 Posted by{' '}
                 <UnderlinedLink to="/">
                     <p className="font-medium hover:text-gray-400 duration-200">
                         {post.user.displayName}
                     </p>
                 </UnderlinedLink>
-            </p>
+            </div>
             <hr />
 
             <p className="mt-2">{post.content}</p>

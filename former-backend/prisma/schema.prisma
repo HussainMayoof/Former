@@ -19,11 +19,18 @@ model User {
   updatedAt    DateTime  @updatedAt
 }
 
+model Tag {
+  tagName   String   @id
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  posts     Post[]
+}
+
 model Post {
   id        Int       @id @default(autoincrement())
   title     String
   content   String?
-  tags      String[]
+  tags      Tag[]
   score     Int       @default(0)
   comments  Comment[]
   user      User      @relation(fields: [userId], references: [id])

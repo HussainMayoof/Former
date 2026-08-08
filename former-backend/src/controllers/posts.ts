@@ -22,7 +22,7 @@ PostsRouter.get('/', async (_req, res) => {
 
 //Get one post
 PostsRouter.get('/:id', async (req, res) => {
-    const id = Number(req.params.id);
+    const id = req.params.id;
     const post = await prisma.post.findUnique({
         where: { id },
         include: {

@@ -29,7 +29,7 @@ const Post = () => {
                 <div className="flex gap-2 my-2">
                     {post.tags.map((tag) => (
                         <Link
-                            to="/"
+                            to={`/tags/${tag.tagName}`}
                             key={tag.tagName}
                             className="bg-blue-400 hover:bg-blue-500 transition-colors duration-300 rounded-sm py-1 px-1.5 text-sm text-black"
                         >
@@ -40,7 +40,7 @@ const Post = () => {
             )}
             <div className="font-thin text-sm mb-2">
                 Posted by{' '}
-                <UnderlinedLink to="/">
+                <UnderlinedLink to={`/users/${post.userId}`}>
                     <p className="font-medium hover:text-gray-400 duration-200">
                         {post.user.displayName}
                     </p>

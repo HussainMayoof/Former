@@ -8,10 +8,10 @@ datasource db {
 }
 
 model User {
-  id           Int       @id @default(autoincrement())
+  id           String    @id @default(uuid())
   username     String    @unique
   passwordHash String
-  displayName  String?
+  displayName  String
   formits      Int       @default(0)
   posts        Post[]
   comments     Comment[]
@@ -27,14 +27,14 @@ model Tag {
 }
 
 model Post {
-  id        Int       @id @default(autoincrement())
+  id        String    @id @default(uuid())
   title     String
   content   String?
   tags      Tag[]
   score     Int       @default(0)
   comments  Comment[]
   user      User      @relation(fields: [userId], references: [id])
-  userId    Int
+  userId    String
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
 }
@@ -44,9 +44,9 @@ model Comment {
   content         String
   childComments   Comment[] @relation("CommentToComment")
   user            User      @relation(fields: [userId], references: [id])
-  userId          Int
+  userId          String
   post            Post      @relation(fields: [postId], references: [id])
-  postId          Int
+  postId          String
   parentComment   Comment?  @relation("CommentToComment", fields: [parentCommentId], references: [id])
   parentCommentId Int?
   createdAt       DateTime  @default(now())

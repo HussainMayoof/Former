@@ -18,7 +18,7 @@ const SinglePost = ({ post }: { post: PostWithUser }) => {
                 className="hover:bg-gray-700 transition-colors duration-100 rounded-lg w-3/4 p-2 cursor-pointer"
                 onClick={handleClick}
             >
-                <UnderlinedLink to="/">
+                <UnderlinedLink to={`/users/${post.userId}`}>
                     <p className="text-sm hover:text-gray-400 duration-200">
                         {post.user.displayName}
                     </p>

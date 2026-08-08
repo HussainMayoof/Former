@@ -1,4 +1,5 @@
 import type { Prisma } from '../../former-backend/src/generated/prisma/client.ts';
+import type { PostCreateInputType } from '../../former-backend/src/util/zod.ts';
 
 export type PostWithUser = Prisma.PostGetPayload<{
     include: {
@@ -25,6 +26,8 @@ export type PostWithUserAndTags = Prisma.PostGetPayload<{
     };
 }>;
 
+export type NewPost = PostCreateInputType;
+
 export interface AuthenticatedUser {
     username: string;
     token: string;
@@ -36,5 +39,13 @@ export interface UserState {
         login: (username: string, password: string) => Promise<void>;
         register: (username: string, password: string) => Promise<void>;
         logout: () => void;
+    };
+}
+
+export interface PostsState {
+    posts: PostWithUser[];
+    actions: {
+        getPosts: () => Promise<void>;
+        addPost: (post: NewPost) => Promise<Prisma.PostModel>;
     };
 }

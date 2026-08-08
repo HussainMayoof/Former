@@ -16,14 +16,22 @@ const Header = () => {
 
             <div className="flex justify-end gap-4">
                 {user && (
-                    <button
-                        className="hover:text-gray-400 duration-200 cursor-pointer"
-                        onClick={() => {
-                            logout();
-                        }}
-                    >
-                        Log Out
-                    </button>
+                    <>
+                        <UnderlinedLink to="/posts/new" navLink>
+                            <p className="hover:text-gray-400 duration-200">
+                                New Post
+                            </p>
+                        </UnderlinedLink>
+
+                        <button
+                            className="hover:text-gray-400 duration-200 cursor-pointer"
+                            onClick={() => {
+                                logout();
+                            }}
+                        >
+                            Log Out
+                        </button>
+                    </>
                 )}
 
                 {!user && (

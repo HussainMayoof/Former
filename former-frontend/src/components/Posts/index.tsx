@@ -1,18 +1,15 @@
-import { useEffect, useState } from 'react';
-import { getAllPosts } from '../../services/PostService.ts';
-import type { PostWithUser } from '../../types.ts';
+import { useEffect } from 'react';
 import SinglePost from './SinglePost.tsx';
+import { usePosts, usePostsActions } from '../../store.ts';
 
 const Posts = () => {
-    const [posts, setPosts] = useState<PostWithUser[]>([]);
+    // const [posts, setPosts] = useState<PostWithUser[]>([]);
+    const posts = usePosts();
+    const { getPosts } = usePostsActions();
 
     useEffect(() => {
-        const fetchPosts = async () => {
-            setPosts(await getAllPosts());
-        };
-
-        fetchPosts();
-    }, []);
+        getPosts();
+    }, [getPosts]);
 
     if (!posts) {
         return null;

@@ -51,7 +51,6 @@ PostsRouter.post('/', tokenExtractor, async (req: TokenRequest, res) => {
 
     const { title, content, tags } = PostCreateInput.parse({
         ...body,
-        userId: req.token.id,
     });
 
     const post = await prisma.post.create({
@@ -65,6 +64,13 @@ PostsRouter.post('/', tokenExtractor, async (req: TokenRequest, res) => {
                 })),
             },
             userId: req.token.id,
+        },
+        include: {
+            user: {
+                select: {
+                    displayName: true,
+                },
+            },
         },
     });
 

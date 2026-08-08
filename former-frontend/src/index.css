@@ -1,4 +1,5 @@
 @import 'tailwindcss';
+
 @custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
 
 .active {
@@ -7,6 +8,10 @@
 
 .input {
     @apply border border-gray-300 rounded-xl p-3 focus:outline-none;
+}
+
+.input-sm {
+    @apply border border-gray-300 rounded-xl p-2 focus:outline-none;
 }
 
 .submit-button {

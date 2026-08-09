@@ -49,6 +49,8 @@ FROM nginx:1.27-alpine AS serve-stage
 
 COPY --from=build-stage /usr/src/app/former-frontend/dist /usr/share/nginx/html
 
+COPY ./former-frontend/nginx.conf /etc/nginx/
+
 EXPOSE 80
 
 CMD ["nginx", "-g", "daemon off;"]

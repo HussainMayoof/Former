@@ -1,5 +1,5 @@
 import { PrismaPg } from '@prisma/adapter-pg';
-import { DATABASE_URL } from './config.js';
+import { DATABASE_URL } from '../util/config.js';
 import { PrismaClient } from '../generated/prisma/client.js';
 import { UserCreateInput } from './zod.js';
 

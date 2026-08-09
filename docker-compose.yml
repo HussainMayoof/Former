@@ -27,7 +27,9 @@ services:
 
   app:
     image: former-frontend
-    build: ./former-frontend
+    build:
+      context: .
+      dockerfile: ./former-frontend/Dockerfile
     ports:
       - "5173:80"
     volumes:

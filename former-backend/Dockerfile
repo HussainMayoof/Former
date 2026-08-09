@@ -24,6 +24,8 @@ RUN mkdir -p dist && chown node:node dist
 
 USER node
 
+RUN npx prisma generate deploy
+
 RUN npm run build
 
 FROM node:26-alpine AS serve-stage

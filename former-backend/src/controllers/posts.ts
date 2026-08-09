@@ -1,8 +1,8 @@
 import { Router } from 'express';
-import prisma from '../util/prisma.js';
+import prisma from '../schemas/prisma.js';
 import { tokenExtractor } from '../util/middleware.js';
 import type { TokenRequest } from '../types.js';
-import { PostCreateInput, PostParams } from '../util/zod.js';
+import { PostCreateInput, PostParams } from '../schemas/zod.js';
 
 const PostsRouter = Router();
 

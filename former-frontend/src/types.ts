@@ -1,5 +1,5 @@
-import type { Prisma } from '../../former-backend/src/generated/prisma/client.ts';
-import type { PostCreateInputType } from '../../former-backend/src/util/zod.ts';
+import type { Prisma } from '../../former-backend/src/generated/prisma/browser.ts';
+import type { PostCreateInputType } from '../../former-backend/src/schemas/zod.ts';
 
 export type PostWithUser = Prisma.PostGetPayload<{
     include: {

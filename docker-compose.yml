@@ -18,9 +18,7 @@ services:
     environment:
       PORT: 3000
       DATABASE_URL: postgresql://postgres:postgres@postgres:5432/former
-    volumes:
-      - ./former-backend:/usr/src/app
-      - /usr/src/app/node_modules
+      JWT_SECRET: ${JWT_SECRET}
     container_name: former-backend
     depends_on:
       - postgres
@@ -32,9 +30,8 @@ services:
       dockerfile: ./former-frontend/Dockerfile
     ports:
       - "5173:80"
-    volumes:
-      - ./former-frontend:/usr/src/app
-      - /usr/src/app/node_modules
+    environment:
+      VITE_API_URL: http://server:3000
     container_name: former-frontend
 
 volumes:

@@ -24,7 +24,7 @@ RUN mkdir -p dist && chown node:node dist
 
 USER node
 
-RUN npx prisma generate deploy
+RUN npx prisma generate
 
 RUN npm run build
 
@@ -33,10 +33,16 @@ FROM node:26-alpine AS serve-stage
 WORKDIR /usr/src/app
 
 COPY --from=build-stage --chown=node:node /usr/src/app/dist ./dist
+
 COPY --from=build-stage --chown=node:node /usr/src/app/package*.json ./
+
 COPY --from=build-stage --chown=node:node /usr/src/app/prisma ./prisma
 
+COPY --from=build-stage --chown=node:node /usr/src/app/prisma.config.ts ./
+
 RUN npm ci --omit=dev
+
+RUN npx prisma generate
 
 USER node
 

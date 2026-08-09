@@ -1,13 +1,11 @@
 FROM node:26-alpine AS types-stage
 WORKDIR /usr/src/app/former-backend
 
-#COPY --chown=node:node ./former-backend/package.json ./former-backend/package-lock.json ./
-#
-#COPY --chown=node:node ./former-backend/prisma ./prisma
-#
-#COPY --chown=node:node ./former-backend/src/schemas ./src/schemas
+COPY --chown=node:node ./former-backend/package.json ./former-backend/package-lock.json ./
 
-COPY --chown=node:node ./former-backend/ .
+COPY --chown=node:node ./former-backend/prisma ./prisma
+
+COPY --chown=node:node ./former-backend/src/schemas ./src/schemas
 
 RUN npm ci
 

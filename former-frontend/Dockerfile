@@ -13,13 +13,15 @@ RUN npx prisma generate deploy
 
 FROM node:26-alpine AS test-stage
 
-WORKDIR /usr/src/app/former-frontend
+WORKDIR /usr/src/app
 
 COPY --chown=node:node ./former-frontend/ .
 
-USER node
+RUN cd ./former-frontend/
 
 RUN npm ci
+
+USER node
 
 RUN npm run lint
 
@@ -43,14 +45,16 @@ USER node
 
 RUN npm ci
 
+ARG VITE_API_URL
+
+ENV VITE_API_URL=$VITE_API_URL
+
 RUN npm run build
 
 FROM nginx:1.27-alpine AS serve-stage
 
 COPY --from=build-stage /usr/src/app/former-frontend/dist /usr/share/nginx/html
 
-COPY ./former-frontend/nginx.conf /etc/nginx/
-
-EXPOSE 80
+COPY ./former-frontend/nginx.conf /etc/nginx/templates/default.conf.template
 
 CMD ["nginx", "-g", "daemon off;"]

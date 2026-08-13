@@ -11,6 +11,9 @@ export default defineConfig([
     eslintConfigESLint,
     eslintConfigPrettier,
     {
+        ignores: ['src/generated/**', 'dist/**', 'node_modules/**'],
+    },
+    {
         languageOptions: {
             globals: {
                 ...globals.node,
@@ -20,6 +23,7 @@ export default defineConfig([
             'no-console': 'off',
             'new-cap': 'off',
             'func-style': 'off',
+            'unicorn/prefer-string-slice': 'off',
         },
     },
 ]);

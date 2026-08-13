@@ -4,9 +4,9 @@ WORKDIR /usr/src/app
 
 COPY --chown=node:node . .
 
-USER node
-
 RUN npm ci
+
+USER node
 
 RUN npm run lint
 

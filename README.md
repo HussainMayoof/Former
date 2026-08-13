@@ -1,18 +1,34 @@
 # Former
 
-A social media app built with&ensp;<img src="https://img.icons8.com/?size=100&id=kg46nzoJrmTR&format=png&color=ffffff" style="vertical-align: middle;" width="16" height="16" alt="Express.js Logo"> Express.js and&ensp;<img src="https://img.icons8.com/?size=100&id=122637&format=png&color=61DBFB" style="vertical-align: middle;" width="16" height="16" alt="React Logo"> React ran in&ensp;<img src="https://img.icons8.com/?size=100&id=cdYUlRaag9G9&format=png&color=000000" style="vertical-align: middle;" width="16" height="16" alt="Docker Logo"> Docker using Docker Compose
+A social media app built
+with&ensp;<img src="https://img.icons8.com/?size=100&id=kg46nzoJrmTR&format=png&color=ffffff" style="vertical-align: middle;" width="16" height="16" alt="Express.js Logo">
+Express.js
+and&ensp;<img src="https://img.icons8.com/?size=100&id=122637&format=png&color=61DBFB" style="vertical-align: middle;" width="16" height="16" alt="React Logo">
+React ran
+in&ensp;<img src="https://img.icons8.com/?size=100&id=cdYUlRaag9G9&format=png&color=000000" style="vertical-align: middle;" width="16" height="16" alt="Docker Logo">
+Docker using Docker Compose
 
 ---
 
 ## Features
 
 - Backend, database, and frontend can all be built and started using a single Docker Compose command
-- Backend is built in&ensp;<img src="https://img.icons8.com/?size=100&id=hsPbhkOH4FMe&format=png&color=000000" style="vertical-align: middle;" width="16" height="16" alt="Node.js Logo"> Node.js using the&ensp;<img src="https://img.icons8.com/?size=100&id=kg46nzoJrmTR&format=png&color=ffffff" style="vertical-align: middle;" width="16" height="16" alt="Express.js Logo"> Express.js framework and the&ensp;<img src="https://img.icons8.com/?size=100&id=zJh5Gyrd6ZKu&format=png&color=000000" style="vertical-align: middle;" width="16" height="16" alt="Prisma ORM Logo"> Prisma ORM
+- Backend is built
+  in&ensp;<img src="https://img.icons8.com/?size=100&id=hsPbhkOH4FMe&format=png&color=000000" style="vertical-align: middle;" width="16" height="16" alt="Node.js Logo">
+  Node.js using
+  the&ensp;<img src="https://img.icons8.com/?size=100&id=kg46nzoJrmTR&format=png&color=ffffff" style="vertical-align: middle;" width="16" height="16" alt="Express.js Logo">
+  Express.js framework and
+  the&ensp;<img src="https://img.icons8.com/?size=100&id=zJh5Gyrd6ZKu&format=png&color=000000" style="vertical-align: middle;" width="16" height="16" alt="Prisma ORM Logo">
+  Prisma ORM
 - <img src="https://img.icons8.com/?size=100&id=36440&format=png&color=336791" style="vertical-align: middle;" width="16" height="16" alt="PostgreSQL Logo"> PostgreSQL is used as the database
-- Frontend is built in&ensp;<img src="https://img.icons8.com/?size=100&id=122637&format=png&color=61DBFB" style="vertical-align: middle;" width="16" height="16" alt="React Logo"> React using&ensp;<img src="https://img.icons8.com/?size=100&id=4PiNHtUJVbLs&format=png&color=000000" style="vertical-align: middle;" width="16" height="16" alt="Tailwind cSS Logo"> Tailwind CSS for styling
+- Frontend is built
+  in&ensp;<img src="https://img.icons8.com/?size=100&id=122637&format=png&color=61DBFB" style="vertical-align: middle;" width="16" height="16" alt="React Logo">
+  React
+  using&ensp;<img src="https://img.icons8.com/?size=100&id=4PiNHtUJVbLs&format=png&color=000000" style="vertical-align: middle;" width="16" height="16" alt="Tailwind cSS Logo">
+  Tailwind CSS for styling
 - <img src="https://reactrouter.com/_brand/react-router-brand-assets/logo/Dark.png" style="vertical-align: middle;" width="16" alt="PostgreSQL Logo"> React Router is used for frontend routing
 - <img src="https://user-images.githubusercontent.com/958486/218346783-72be5ae3-b953-4dd7-b239-788a882fdad6.svg" style="vertical-align: middle;" width="16" height="16" alt="Zustand Logo"> Zustand is used for store management in the frontend
-- Fully implemented user sign up and log in system
+- Fully implemented user signup and log in system
 - Posts are shown to users using a basic recommendation algorithm
 - Users can vote on posts, and users earn points called 'Formits' based on their posts' scores
 
@@ -36,24 +52,44 @@ The project requires `.env` files in both the `former-backend` and `former-front
 
 ## Run Locally in Development Environment
 
->### Prerequisites
-> 
+> ### Prerequisites
+>
 >1. [Node.js and npm](https://nodejs.org/en/download/)
 >2. [Docker Desktop](https://www.docker.com/products/docker-desktop/)
 
 - At the project root, run `docker compose -f docker-compose.dev.yml up` to start up the database in docker
 - Run `npm i` in both the `former-backend` and `former-frontend` directories to install dependencies
 - Run `npx prisma generate dev` in the `former-backend` directory
-- Run `npm run dev` in both the `former-backend` and `former-frontend` directories to start the dev backend and frontend servers
+- Run `npm run dev` in both the `former-backend` and `former-frontend` directories to start the dev backend and frontend
+  servers
 - The project will be available on http://localhost:5173/
 
 ---
 
 ## Build and Start Application Using Docker Compose
 
->### Prerequisites
+> ### Prerequisites
 >
 >1. [Docker Desktop](https://www.docker.com/products/docker-desktop/)
 
 - At the project root, run `docker compose up` to start up all the services in Docker
 - The project will be available on http://localhost:5173/
+
+---
+
+## To Do List
+
+- [ ] Show comments on posts
+- [ ] Allow comment creation
+- [ ] Add a voting system
+- [ ] Add a profile page
+- [ ] Add a search bar
+- [ ] Add sorting and advanced search
+- [ ] Add post and comment editing and deletion
+- [ ] Add user profile editing and deletion
+- [ ] Add custom error pages (404, 500)
+- [ ] Improve the design using DaisyUI
+- [ ] Add pagination to searching or infinite scrolling
+- [ ] Add email verification
+- [ ] Add testing to the CI/CD pipeline
+- [ ] Add Redis caching

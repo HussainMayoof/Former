@@ -14,7 +14,7 @@ jobs:
   #
   #      - name: Run backend lint + tests
   #        run: docker build --target test-stage -t former-backend-test ./former-backend
-
+  #
   #  frontend-test:
   #    runs-on: ubuntu-latest
   #    steps:
@@ -46,10 +46,9 @@ jobs:
           context: ./former-backend
           target: serve-stage
           platforms: linux/amd64
-          push: true
           provenance: false
           sbom: false
-          tags: registry.heroku.com/${{ vars.HEROKU_BACKEND_APP }}/web
+          outputs: type=image,name=registry.heroku.com/${{ vars.HEROKU_BACKEND_APP }}/web,push=true,oci-mediatypes=false
           cache-from: type=gha,scope=backend
           cache-to: type=gha,mode=max,scope=backend
 
@@ -84,12 +83,11 @@ jobs:
           context: .
           file: ./former-frontend/Dockerfile
           platforms: linux/amd64
-          push: true
           provenance: false
           sbom: false
           build-args: |
             VITE_API_URL=${{ vars.BACKEND_URL }}
-          tags: registry.heroku.com/${{ vars.HEROKU_FRONTEND_APP }}/web
+          outputs: type=image,name=registry.heroku.com/${{ vars.HEROKU_FRONTEND_APP }}/web,push=true,oci-mediatypes=false
           cache-from: type=gha,scope=frontend
           cache-to: type=gha,mode=max,scope=frontend
 

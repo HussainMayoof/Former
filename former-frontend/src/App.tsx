@@ -13,6 +13,7 @@ const App = () => {
             className="flex flex-col gap-4 dark:bg-gray-800 dark:text-gray-200 bg-gray-200 text-gray-800 p-4 min-h-screen"
             data-theme="dark"
         >
+            <title>Former</title>
             <Header />
             <Routes>
                 <Route path="/" element={<Posts />} />

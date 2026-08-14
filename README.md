@@ -11,6 +11,7 @@ Docker using Docker Compose during development, and deployed to &ensp;<img src="
 
 ## Features
 
+- Monorepo structure utilising npm workspaces
 - Backend, database, and frontend can all be built and started using a single Docker Compose command
 - Backend is built
   in&ensp;<img src="https://img.icons8.com/?size=100&id=hsPbhkOH4FMe&format=png&color=000000" style="vertical-align: middle;" width="16" height="16" alt="Node.js Logo">
@@ -48,6 +49,9 @@ The project requires `.env` files in both the `former-backend` and `former-front
 
 - `VITE_API_URL` — the URL to the backend e.g. `http://localhost:3000/api`
 
+### Shared Variables
+- `DATABASE_URL` — the same URL used in the backend
+
 ---
 
 ## Run Locally in Development Environment
@@ -58,8 +62,7 @@ The project requires `.env` files in both the `former-backend` and `former-front
 >2. [Docker Desktop](https://www.docker.com/products/docker-desktop/)
 
 - At the project root, run `docker compose -f docker-compose.dev.yml up` to start up the database in docker
-- Run `npm i` in both the `former-backend` and `former-frontend` directories to install dependencies
-- Run `npx prisma generate dev` in the `former-backend` directory
+- Run `npm i` in the roo directory to install dependencies
 - Run `npm run dev` in both the `former-backend` and `former-frontend` directories to start the dev backend and frontend
   servers
 - The project will be available on http://localhost:5173/

@@ -15,6 +15,7 @@
         "start": "node --experimental-vm-modules ./dist/src/index.js"
     },
     "dependencies": {
+        "@former/shared": "*",
         "@prisma/adapter-pg": "^7.8.0",
         "@prisma/client": "^7.8.0",
         "bcrypt": "^6.0.0",
@@ -39,7 +40,7 @@
         "prettier": "^3.8.3",
         "prisma": "^7.8.0",
         "ts-node": "^10.9.2",
-        "tsx": "^4.22.3",
+        "tsx": "^4.23.12",
         "typescript": "^6.0.3",
         "typescript-eslint": "^8.59.4",
         "vitest": "^4.1.7"

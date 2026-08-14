@@ -1,0 +1,13 @@
+{
+    "name": "former",
+    "private": true,
+    "workspaces": [
+        "former-backend",
+        "former-frontend",
+        "packages/shared"
+    ],
+    "scripts": {
+        "build": "npm run build -w former-$BUILD_TARGET",
+        "start": "npm run start -w former-$BUILD_TARGET"
+    }
+}

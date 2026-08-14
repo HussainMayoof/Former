@@ -9,57 +9,53 @@ on:
 jobs:
     backend-test:
         runs-on: ubuntu-latest
-        defaults:
-            run:
-                working-directory: ./former-backend
         steps:
-            -   name: Checkout repository for backend testing
+            -   name: Checkout repository
                 uses: actions/checkout@v6
 
-            -   name: Setup Node.js for backend
+            -   name: Setup Node.js
                 uses: actions/setup-node@v6
+                with:
+                    cache: npm
 
-            -   name: Install backend dependencies
+            -   name: Install workspace dependencies
                 run: npm ci
 
             -   name: Run backend lint
-                run: npm run lint
+                run: npm run lint -w former-backend
 
             -   name: Run backend tests
-                run: npm run test
+                run: npm run test -w former-backend
 
     frontend-test:
         runs-on: ubuntu-latest
-        defaults:
-            run:
-                working-directory: ./former-frontend
         steps:
-            -   name: Checkout repository for frontend testing
+            -   name: Checkout repository
                 uses: actions/checkout@v6
 
-            -   name: Setup Node.js for frontend
+            -   name: Setup Node.js
                 uses: actions/setup-node@v6
+                with:
+                    cache: npm
 
-            -   name: Install frontend dependencies
+            -   name: Install workspace dependencies
                 run: npm ci
 
             -   name: Run frontend lint
-                run: npm run lint
+                run: npm run lint -w former-frontend
 
             -   name: Run frontend tests
-                run: npm run test
+                run: npm run test -w former-frontend
 
     backend-deploy:
         needs: backend-test
+        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
         runs-on: ubuntu-latest
-        defaults:
-            run:
-                working-directory: ./former-backend
         steps:
-            -   name: Checkout repository for backend deployment
+            -   name: Checkout repository
                 uses: actions/checkout@v6
 
-            -   name: Install Heroku CLI for backend
+            -   name: Install Heroku CLI
                 run: curl https://cli-assets.heroku.com/install.sh | sh
 
             -   name: Deploy backend to Heroku
@@ -68,19 +64,16 @@ jobs:
                     heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
                     heroku_app_name: ${{ vars.HEROKU_BACKEND_APP }}
                     heroku_email: ${{ secrets.HEROKU_EMAIL }}
-                    appdir: former-backend
 
     frontend-deploy:
         needs: frontend-test
+        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
         runs-on: ubuntu-latest
-        defaults:
-            run:
-                working-directory: ./former-frontend
         steps:
-            -   name: Checkout repository for frontend deployment
+            -   name: Checkout repository
                 uses: actions/checkout@v6
 
-            -   name: Install Heroku CLI for frontend
+            -   name: Install Heroku CLI
                 run: curl https://cli-assets.heroku.com/install.sh | sh
 
             -   name: Deploy frontend to Heroku
@@ -89,4 +82,3 @@ jobs:
                     heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
                     heroku_app_name: ${{ vars.HEROKU_FRONTEND_APP }}
                     heroku_email: ${{ secrets.HEROKU_EMAIL }}
-                    appdir: former-frontend

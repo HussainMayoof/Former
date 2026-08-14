@@ -1,5 +1,5 @@
-import { z } from 'zod';
-import { Prisma } from '../generated/prisma/client.js';
+import {z} from 'zod';
+import {Prisma} from '../generated/prisma/client.js';
 
 export const UserCreateParams = z.object({
     username: z.string().min(4).max(20),

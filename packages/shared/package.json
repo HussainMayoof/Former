@@ -1,0 +1,25 @@
+{
+    "name": "@former/shared",
+    "version": "1.0.0",
+    "type": "module",
+    "main": "dist/index.js",
+    "types": "dist/index.js",
+    "exports": {
+        ".": {
+            "types": "./dist/index.js",
+            "default": "./dist/index.js"
+        }
+    },
+    "scripts": {
+        "postinstall": "prisma generate --schema=./prisma/schema.prisma && npm run build",
+        "build": "tsc --build"
+    },
+    "dependencies": {
+        "@prisma/client": "^7.8.0",
+        "zod": "^4.4.3"
+    },
+    "devDependencies": {
+        "@types/node": "^25.9.5",
+        "prisma": "^7.8.0"
+    }
+}

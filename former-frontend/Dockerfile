@@ -17,8 +17,6 @@ WORKDIR /usr/src/app
 
 COPY --chown=node:node ./former-frontend/ .
 
-RUN cd ./former-frontend/
-
 RUN npm ci
 
 USER node

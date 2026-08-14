@@ -10,6 +10,7 @@
         "test": "echo \"No tests yet\"",
         "dev": "nodemon --exec \"tsx --env-file=.env\" ./src/index.ts",
         "lint": "eslint . --fix",
+        "prettier": "prettier . --write",
         "build": "tsc",
         "start": "node --experimental-vm-modules ./dist/src/index.js"
     },

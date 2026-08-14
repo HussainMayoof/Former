@@ -31,6 +31,7 @@ Docker using Docker Compose
 - Fully implemented user signup and log in system
 - Posts are shown to users using a basic recommendation algorithm
 - Users can vote on posts, and users earn points called 'Formits' based on their posts' scores
+- Uses <img src="https://img.icons8.com/?size=100&id=12599&format=png&color=000000" style="vertical-align: middle;" width="16" height="16" alt="GitHub Logo"> GitHub Actions to deploy the application to <img src="https://img.icons8.com/?size=100&id=31085&format=png&color=000000" style="vertical-align: middle;" width="16" height="16" alt="Heroku Logo"> Heroku on every push and pull request
 
 ---
 
@@ -91,5 +92,4 @@ The project requires `.env` files in both the `former-backend` and `former-front
 - [ ] Improve the design using DaisyUI
 - [ ] Add pagination to searching or infinite scrolling
 - [ ] Add email verification
-- [ ] Add testing to the CI/CD pipeline
 - [ ] Add Redis caching

@@ -57,7 +57,7 @@ jobs:
                 working-directory: ./former-backend
         steps:
             -   name: Checkout repository for backend deployment
-                uses: actions/checkout@v4
+                uses: actions/checkout@v6
 
             -   name: Install Heroku CLI for backend
                 run: curl https://cli-assets.heroku.com/install.sh | sh
@@ -77,7 +77,7 @@ jobs:
                 working-directory: ./former-frontend
         steps:
             -   name: Checkout repository for frontend deployment
-                uses: actions/checkout@v4
+                uses: actions/checkout@v6
 
             -   name: Install Heroku CLI for frontend
                 run: curl https://cli-assets.heroku.com/install.sh | sh

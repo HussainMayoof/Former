@@ -11,20 +11,6 @@ RUN npm ci
 
 RUN npx prisma generate deploy
 
-FROM node:26-alpine AS test-stage
-
-WORKDIR /usr/src/app
-
-COPY --chown=node:node ./former-frontend/ .
-
-RUN npm ci
-
-USER node
-
-RUN npm run lint
-
-RUN npm run test
-
 FROM node:26-alpine AS build-stage
 
 WORKDIR /usr/src/app

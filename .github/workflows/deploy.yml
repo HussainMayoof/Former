@@ -9,19 +9,35 @@ on:
 jobs:
     backend-test:
         runs-on: ubuntu-latest
+        defaults:
+            run:
+                working-directory: ./former-backend
         steps:
-            -   uses: actions/checkout@v4
+            -   uses: actions/checkout@v6
 
-            -   name: Run backend lint and tests
-                run: docker build --target test-stage -t former-backend-test ./former-backend
+            -   uses: actions/setup-node@v6
+
+            -   name: Run backend lint
+                run: npm run lint
+
+            -   name: Run backend tests
+                run: npm run test
 
     frontend-test:
         runs-on: ubuntu-latest
+        defaults:
+            run:
+                working-directory: ./former-frontend
         steps:
-            -   uses: actions/checkout@v4
+            -   uses: actions/checkout@v6
 
-            -   name: Run frontend lint and tests
-                run: docker build --target test-stage -t former-frontend-test -f former-frontend/Dockerfile .
+            -   uses: actions/setup-node@v6
+
+            -   name: Run frontend lint
+                run: npm run lint
+
+            -   name: Run frontend tests
+                run: npm run test
 
     backend-deploy:
         needs: backend-test

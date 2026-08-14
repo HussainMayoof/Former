@@ -4,9 +4,8 @@ A social media app built
 with&ensp;<img src="https://img.icons8.com/?size=100&id=kg46nzoJrmTR&format=png&color=ffffff" style="vertical-align: middle;" width="16" height="16" alt="Express.js Logo">
 Express.js
 and&ensp;<img src="https://img.icons8.com/?size=100&id=122637&format=png&color=61DBFB" style="vertical-align: middle;" width="16" height="16" alt="React Logo">
-React ran
-in&ensp;<img src="https://img.icons8.com/?size=100&id=cdYUlRaag9G9&format=png&color=000000" style="vertical-align: middle;" width="16" height="16" alt="Docker Logo">
-Docker using Docker Compose
+React, running in&ensp;<img src="https://img.icons8.com/?size=100&id=cdYUlRaag9G9&format=png&color=000000" style="vertical-align: middle;" width="16" height="16" alt="Docker Logo">
+Docker using Docker Compose during development, and deployed to &ensp;<img src="https://img.icons8.com/?size=100&id=31085&format=png&color=000000" style="vertical-align: middle;" width="16" height="16" alt="Heroku Logo"> Heroku.
 
 ---
 
@@ -31,7 +30,7 @@ Docker using Docker Compose
 - Fully implemented user signup and log in system
 - Posts are shown to users using a basic recommendation algorithm
 - Users can vote on posts, and users earn points called 'Formits' based on their posts' scores
-- Uses <img src="https://img.icons8.com/?size=100&id=12599&format=png&color=000000" style="vertical-align: middle;" width="16" height="16" alt="GitHub Logo"> GitHub Actions to deploy the application to <img src="https://img.icons8.com/?size=100&id=31085&format=png&color=000000" style="vertical-align: middle;" width="16" height="16" alt="Heroku Logo"> Heroku on every push and pull request
+- Uses&ensp;<img src="https://img.icons8.com/?size=100&id=12599&format=png&color=000000" style="vertical-align: middle;" width="16" height="16" alt="GitHub Logo"> GitHub Actions to deploy the application to &ensp;<img src="https://img.icons8.com/?size=100&id=31085&format=png&color=000000" style="vertical-align: middle;" width="16" height="16" alt="Heroku Logo"> Heroku on every push and pull request
 
 ---
 

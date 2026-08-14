@@ -68,6 +68,7 @@ jobs:
                     heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
                     heroku_app_name: ${{ vars.HEROKU_BACKEND_APP }}
                     heroku_email: ${{ secrets.HEROKU_EMAIL }}
+                    appdir: former-backend
 
     frontend-deploy:
         needs: frontend-test
@@ -88,3 +89,4 @@ jobs:
                     heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
                     heroku_app_name: ${{ vars.HEROKU_FRONTEND_APP }}
                     heroku_email: ${{ secrets.HEROKU_EMAIL }}
+                    appdir: former-frontend

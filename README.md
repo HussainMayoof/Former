@@ -5,7 +5,7 @@ with&ensp;<img src="https://img.icons8.com/?size=100&id=kg46nzoJrmTR&format=png&
 Express.js
 and&ensp;<img src="https://img.icons8.com/?size=100&id=122637&format=png&color=61DBFB" style="vertical-align: middle;" width="16" height="16" alt="React Logo">
 React, running in&ensp;<img src="https://img.icons8.com/?size=100&id=cdYUlRaag9G9&format=png&color=000000" style="vertical-align: middle;" width="16" height="16" alt="Docker Logo">
-Docker using Docker Compose during development, and deployed to &ensp;<img src="https://img.icons8.com/?size=100&id=31085&format=png&color=000000" style="vertical-align: middle;" width="16" height="16" alt="Heroku Logo"> Heroku.
+Docker using Docker Compose during development, and deployed directly to &ensp;<img src="https://img.icons8.com/?size=100&id=31085&format=png&color=000000" style="vertical-align: middle;" width="16" height="16" alt="Heroku Logo"> Heroku using buildpacks.
 
 ---
 

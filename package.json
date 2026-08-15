@@ -8,6 +8,7 @@
     ],
     "scripts": {
         "build": "npm run build -w former-$BUILD_TARGET",
-        "start": "npm run start -w former-$BUILD_TARGET"
+        "start": "npm run start -w former-$BUILD_TARGET",
+        "dev": "npm run dev -w former-backend && npm run dev -w former-frontend"
     }
 }

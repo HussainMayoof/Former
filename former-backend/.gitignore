@@ -1,8 +1,0 @@
-.env*
-testing.http
-
-.idea/
-dist/
-node_modules/
-generated/
-src/generated

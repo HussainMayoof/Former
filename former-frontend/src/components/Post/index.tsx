@@ -18,6 +18,12 @@ const Post = () => {
         fetchPost();
     }, [id]);
 
+    useEffect(() => {
+        if (post?.title) {
+            document.title = `Former - ${post.title}`;
+        }
+    }, [post?.title]);
+
     if (!id) return null;
 
     if (!post) return null;

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useUserActions } from '../../store.ts';
 import { useNavigate } from 'react-router';
 
@@ -9,6 +9,10 @@ const Login = () => {
 
     const navigate = useNavigate();
     const { login } = useUserActions();
+
+    useEffect(() => {
+        document.title = 'Former - Log In';
+    }, []);
 
     const handleFormSubmit = async (e: React.SubmitEvent<HTMLFormElement>) => {
         e.preventDefault();

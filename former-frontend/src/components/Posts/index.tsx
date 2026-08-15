@@ -11,6 +11,10 @@ const Posts = () => {
         getPosts();
     }, [getPosts]);
 
+    useEffect(() => {
+        document.title = 'Former';
+    }, []);
+
     if (!posts) {
         return null;
     }

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useUserActions } from '../../store.ts';
 import { useNavigate } from 'react-router';
 
@@ -15,6 +15,10 @@ const Register = () => {
 
     const { register } = useUserActions();
     const navigate = useNavigate();
+
+    useEffect(() => {
+        document.title = 'Former - Register';
+    }, []);
 
     const handleFormSubmit = async (e: React.SubmitEvent<HTMLFormElement>) => {
         e.preventDefault();

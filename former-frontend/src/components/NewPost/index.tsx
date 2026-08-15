@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
 import { usePostsActions } from '../../store.ts';
 
@@ -11,6 +11,10 @@ const NewPost = () => {
 
     const navigate = useNavigate();
     const { addPost } = usePostsActions();
+
+    useEffect(() => {
+        document.title = 'Former - New Post';
+    }, []);
 
     const handleCreateNewTag = (e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();

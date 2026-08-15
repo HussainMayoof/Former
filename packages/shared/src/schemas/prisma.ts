@@ -4,7 +4,10 @@ import {PrismaClient} from '../generated/prisma/client.js';
 import {UserCreateInput} from './zod.js';
 
 const prisma = new PrismaClient({
-    adapter: new PrismaPg({connectionString: DATABASE_URL}),
+    adapter: new PrismaPg({
+        connectionString: DATABASE_URL,
+        ...(process.env.NODE_ENV === 'production' ? {ssl: {rejectUnauthorized: false}} : {}),
+    }),
 }).$extends({
     query: {
         user: {

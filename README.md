@@ -60,8 +60,8 @@ The project requires `.env` files in both the `former-backend` and `former-front
 >1. [Node.js and npm](https://nodejs.org/en/download/)
 >2. [Docker Desktop](https://www.docker.com/products/docker-desktop/)
 
-- At the project root, run `docker compose -f docker-compose.dev.yml up` to start up the database in docker
-- Run `npm i` in the roo directory to install dependencies
+- At the project root, run `docker compose -f docker-compose.dev.yml up` to start up the Database in docker
+- Run `npm i` in the root directory to install dependencies
 - Run `npm run dev` in both the `former-backend` and `former-frontend` directories to start the dev backend and frontend
   servers
 - The project will be available on http://localhost:5173/

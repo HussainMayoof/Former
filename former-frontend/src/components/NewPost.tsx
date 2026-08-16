@@ -64,8 +64,7 @@ const NewPost = () => {
             <label className="flex flex-col gap-1">
                 Content:{' '}
                 <textarea
-                    rows={4}
-                    className="input"
+                    className="input textarea w-full min-h-[100px]"
                     value={content}
                     onChange={(e) => setContent(e.target.value)}
                 />
@@ -86,7 +85,7 @@ const NewPost = () => {
                             />
                         </div>
                         <button
-                            className="bg-blue-300 hover:bg-blue-400 transition-colors duration-300 rounded-sm py-1 px-1.5 text-sm text-black cursor-pointer"
+                            className="btn btn-secondary btn-soft text-xs"
                             onClick={handleCreateNewTag}
                         >
                             Add New Tag
@@ -107,7 +106,7 @@ const NewPost = () => {
                 </div>
             </div>
 
-            <button className="submit-button" type="submit">
+            <button className="btn btn-primary" type="submit">
                 Create Post
             </button>
         </form>

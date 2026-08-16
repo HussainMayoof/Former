@@ -30,33 +30,35 @@ const Login = () => {
     return (
         <form
             onSubmit={handleFormSubmit}
-            className="flex flex-col items-stretch gap-4 p-12 m-6 border-2 rounded-4xl"
+            className="flex flex-col items-center gap-4 p-12 m-6 border-2 rounded-4xl"
         >
             {error && <p>{error.message}</p>}
 
-            <label className="flex flex-col gap-1">
-                Username:{' '}
-                <input
-                    type="text"
-                    className="input"
-                    value={username}
-                    onChange={(e) => setUsername(e.target.value)}
-                />
-            </label>
+            <div className="flex flex-col gap-4 w-64">
+                <label className="flex flex-col gap-1">
+                    Username:{' '}
+                    <input
+                        type="text"
+                        className="input w-full"
+                        value={username}
+                        onChange={(e) => setUsername(e.target.value)}
+                    />
+                </label>
 
-            <label className="flex flex-col gap-1">
-                Password:{' '}
-                <input
-                    type="password"
-                    className="input"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                />
-            </label>
+                <label className="flex flex-col gap-1">
+                    Password:{' '}
+                    <input
+                        type="password"
+                        className="input w-full"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                    />
+                </label>
 
-            <button className="submit-button" type="submit">
-                Log In
-            </button>
+                <button className="btn btn-primary" type="submit">
+                    Log In
+                </button>
+            </div>
         </form>
     );
 };

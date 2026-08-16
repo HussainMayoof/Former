@@ -1,0 +1,54 @@
+name: Test and Deploy Backend
+
+on:
+    push:
+        branches: [ main ]
+        paths-ignore:
+            - 'former-frontend/**'
+            - 'README.md'
+            - 'LICENSE'
+    pull_request:
+        branches: [ main ]
+        paths-ignore:
+            - 'former-frontend/**'
+            - 'README.md'
+            - 'LICENSE'
+
+jobs:
+    test:
+        runs-on: ubuntu-latest
+        steps:
+            -   name: Checkout repository
+                uses: actions/checkout@v6
+
+            -   name: Setup Node.js
+                uses: actions/setup-node@v6
+                with:
+                    cache: npm
+
+            -   name: Install workspace dependencies
+                run: npm ci
+
+            -   name: Run lint
+                run: npm run lint -w former-backend
+
+            -   name: Run tests
+                run: npm run test -w former-backend
+
+    deploy:
+        needs: test
+        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+        runs-on: ubuntu-latest
+        steps:
+            -   name: Checkout repository
+                uses: actions/checkout@v6
+
+            -   name: Install Heroku CLI
+                run: curl https://cli-assets.heroku.com/install.sh | sh
+
+            -   name: Deploy to Heroku
+                uses: akhileshns/heroku-deploy@v3.15.15
+                with:
+                    heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
+                    heroku_app_name: ${{ vars.HEROKU_BACKEND_APP }}
+                    heroku_email: ${{ secrets.HEROKU_EMAIL }}

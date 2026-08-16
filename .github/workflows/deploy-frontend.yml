@@ -1,16 +1,16 @@
-name: Test and Deploy
+name: Test and Deploy Frontend
 
 on:
     push:
         branches: [ main ]
         paths-ignore:
-            - 'former-frontend/**'
+            - 'former-backend/**'
             - 'README.md'
             - 'LICENSE'
     pull_request:
         branches: [ main ]
         paths-ignore:
-            - 'former-frontend/**'
+            - 'former-backend/**'
             - 'README.md'
             - 'LICENSE'
 

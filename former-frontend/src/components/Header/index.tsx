@@ -31,7 +31,9 @@ const Header = () => {
                             onClick={logout}
                         >
                             <div className="bg-neutral text-neutral-content w-8 rounded-full">
-                                <span className="text-md">U</span>
+                                <span className="text-md">
+                                    {user.username[0].toUpperCase()}
+                                </span>
                             </div>
                         </div>
                     </>

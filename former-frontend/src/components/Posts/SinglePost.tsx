@@ -15,7 +15,7 @@ const SinglePost = ({ post }: { post: PostWithUser }) => {
     return (
         <>
             <div
-                className="hover:bg-gray-700 transition-colors duration-100 rounded-lg w-3/4 p-2 cursor-pointer"
+                className="hover:bg-base-300 transition-colors duration-100 rounded-lg w-3/4 p-2 cursor-pointer"
                 onClick={handleClick}
             >
                 <UnderlinedLink to={`/users/${post.userId}`}>

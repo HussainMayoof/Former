@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import SinglePost from './SinglePost.tsx';
+import PostCard from './PostCard.tsx';
 import { usePosts, usePostsActions } from '../../store.ts';
 
 const Posts = () => {
@@ -23,7 +23,7 @@ const Posts = () => {
         <div>
             <div className="flex flex-col items-center mt-4">
                 {posts.map((post) => (
-                    <SinglePost key={post.id} post={post} />
+                    <PostCard key={post.id} post={post} />
                 ))}
             </div>
         </div>

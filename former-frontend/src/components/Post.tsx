@@ -2,7 +2,6 @@ import { Link, useParams } from 'react-router';
 import { useEffect, useState } from 'react';
 import { getPost } from '../services/PostService.ts';
 import type { PostWithUserAndTags } from '../types.ts';
-import UnderlinedLink from './shared/UnderlinedLink.tsx';
 
 const Post = () => {
     const id = useParams().id;
@@ -45,13 +44,28 @@ const Post = () => {
                     ))}
                 </div>
             )}
-            <div className="font-thin text-sm mb-2">
-                Posted by{' '}
-                <UnderlinedLink to={`/users/${post.userId}`}>
+
+            <div className="font-thin text-sm mb-2 ">
+                <Link
+                    to={`/users/${post.userId}`}
+                    className="group w-fit hover:text-tertiary-content duration-200 items-center flex gap-0.5"
+                    viewTransition
+                >
+                    <div className="avatar avatar-placeholder cursor-pointer">
+                        <div className="bg-neutral text-neutral-content w-6 rounded-full">
+                            <span className="text-md">
+                                {post.user.displayName[0].toUpperCase()}
+                            </span>
+                        </div>
+                    </div>
+
                     <p className="font-medium duration-200">
                         {post.user.displayName}
+                        <span
+                            className={`block max-w-0 -mt-0.5 group-hover:max-w-full duration-200 h-px bg-tertiary-content`}
+                        ></span>
                     </p>
-                </UnderlinedLink>
+                </Link>
             </div>
             <hr />
 

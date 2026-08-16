@@ -17,7 +17,7 @@ const Header = () => {
             >
                 Former
             </Link>
-            <div className="flex justify-end gap-4">
+            <div className="flex justify-end gap-4 items-center">
                 <ThemeToggle />
 
                 {user && (
@@ -26,14 +26,14 @@ const Header = () => {
                             New Post
                         </UnderlinedLink>
 
-                        <button
-                            className="hover:text-tertiary-content duration-200 cursor-pointer"
-                            onClick={() => {
-                                logout();
-                            }}
+                        <div
+                            className="avatar cursor-pointer avatar-placeholder"
+                            onClick={logout}
                         >
-                            Log Out
-                        </button>
+                            <div className="bg-neutral text-neutral-content w-8 rounded-full">
+                                <span className="text-md">U</span>
+                            </div>
+                        </div>
                     </>
                 )}
 

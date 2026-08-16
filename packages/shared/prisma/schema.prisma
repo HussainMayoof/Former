@@ -1,15 +1,17 @@
 generator client {
-  provider = "prisma-client"
-  output   = "../src/generated/prisma"
+  provider        = "prisma-client"
+  output          = "../src/generated/prisma"
+  previewFeatures = ["postgresqlExtensions"]
 }
 
 datasource db {
-  provider = "postgresql"
+  provider   = "postgresql"
+  extensions = [citext]
 }
 
 model User {
   id           String    @id @default(uuid())
-  username     String    @unique
+  username     String    @unique @db.Citext
   passwordHash String
   displayName  String
   formits      Int       @default(0)

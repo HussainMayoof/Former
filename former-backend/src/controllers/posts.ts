@@ -1,8 +1,8 @@
 import { Router } from 'express';
-import { prisma } from '@former/shared';
+import { prisma } from '@former/shared/db';
 import { tokenExtractor } from '../util/middleware.js';
 import type { TokenRequest } from '../types.js';
-import { PostCreateInput, PostParams } from '@former/shared';
+import { PostCreateInput, PostParams } from '@former/shared/schemas';
 
 const PostsRouter = Router();
 

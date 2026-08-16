@@ -1,7 +1,7 @@
 import {PrismaPg} from '@prisma/adapter-pg';
 import {DATABASE_URL} from '../util/config.js';
 import {PrismaClient} from '../generated/prisma/client.js';
-import {UserCreateInput} from './zod.js';
+import {UserCreateInput} from './index.js';
 
 const prisma = new PrismaClient({
     adapter: new PrismaPg({

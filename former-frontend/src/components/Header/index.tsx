@@ -10,13 +10,13 @@ const Header = () => {
     return (
         <nav className="grid grid-cols-3 items-center px-4">
             <div />
-            <Link
-                to="/"
-                className="text-2xl font-semibold text-center"
-                viewTransition
-            >
-                Former
-            </Link>
+
+            <h1 className="text-2xl font-semibold text-center">
+                <Link to="/" viewTransition>
+                    Former
+                </Link>
+            </h1>
+
             <div className="flex justify-end gap-4 items-center">
                 <ThemeToggle />
 

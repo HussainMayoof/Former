@@ -2,12 +2,14 @@
     "name": "@former/shared",
     "version": "1.0.0",
     "type": "module",
-    "main": "dist/index.js",
-    "types": "dist/index.js",
     "exports": {
-        ".": {
-            "types": "./dist/index.js",
-            "default": "./dist/index.js"
+        "./schemas": {
+            "types": "./dist/schemas/index.d.ts",
+            "default": "./dist/schemas/index.js"
+        },
+        "./db": {
+            "types": "./dist/db/index.d.ts",
+            "default": "./dist/db/index.js"
         }
     },
     "scripts": {

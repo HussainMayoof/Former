@@ -1,5 +1,5 @@
-import type { Prisma } from '@former/shared';
-import type { PostCreateInputType } from '@former/shared';
+import type { Prisma } from '@former/shared/schemas';
+import type { PostCreateInputType } from '@former/shared/schemas';
 
 export type PostWithUser = Prisma.PostGetPayload<{
     include: {

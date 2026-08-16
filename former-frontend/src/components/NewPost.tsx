@@ -1,13 +1,18 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
 import { usePostsActions } from '../store.ts';
+import type { MouseEvent, SubmitEvent } from 'react';
+import ErrorAlert from './shared/ErrorAlert.tsx';
+import { BsExclamationCircle } from 'react-icons/bs';
 
 const NewPost = () => {
     const [title, setTitle] = useState('');
+    const [titleError, setTitleError] = useState(false);
+
     const [content, setContent] = useState('');
     const [newTag, setNewTag] = useState('');
     const [tags, setTags] = useState<string[]>([]);
-    const [error, setError] = useState<Error>();
+    const [error, setError] = useState('');
 
     const navigate = useNavigate();
     const { addPost } = usePostsActions();
@@ -16,7 +21,7 @@ const NewPost = () => {
         document.title = 'Former - New Post';
     }, []);
 
-    const handleCreateNewTag = (e: React.MouseEvent<HTMLButtonElement>) => {
+    const handleCreateNewTag = (e: MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
         if (newTag) {
             if (tags.includes(newTag)) return;
@@ -30,14 +35,16 @@ const NewPost = () => {
         setTags(tags.filter((tag) => tag !== tagToDelete));
     };
 
-    const handleFormSubmit = async (e: React.SubmitEvent<HTMLFormElement>) => {
+    const handleFormSubmit = async (e: SubmitEvent<HTMLFormElement>) => {
         e.preventDefault();
+        if (title.length < 1) return setTitleError(true);
         try {
             const post = await addPost({ title, content, tags });
             navigate(`/posts/${post.id}`, { viewTransition: true });
         } catch (e) {
             if (e instanceof Error) {
-                setError(e);
+                setError(e.message);
+                setTimeout(() => setError(''), 5000);
             }
         }
     };
@@ -45,26 +52,43 @@ const NewPost = () => {
     return (
         <form
             onSubmit={handleFormSubmit}
-            className="flex flex-col items-stretch gap-4 p-12 m-6 border-2 rounded-4xl"
+            className="flex flex-col gap-4 p-12 m-6 border-2 rounded-4xl"
         >
-            {error && <p>{error.message}</p>}
+            <div className="flex flex-col gap-2 items-center">
+                <h2 className="text-2xl">New Post</h2>
+                <hr className="w-full" />
+            </div>
+
+            {error && <ErrorAlert>{error}</ErrorAlert>}
 
             <label className="flex flex-col gap-1">
                 <span>
-                    Title<span className="text-red-500 mx-0.5">*</span>:{' '}
+                    Title<span className="text-accent mx-0.5">*</span>:{' '}
                 </span>
+
                 <input
                     type="text"
-                    className="input"
+                    className={`input ${titleError ? 'border-error!' : ''}`}
                     value={title}
-                    onChange={(e) => setTitle(e.target.value)}
+                    onChange={(e) => {
+                        setTitle(e.target.value);
+                        setTitleError(e.target.value.length < 1);
+                    }}
+                    onBlur={() => setTitleError(title.length < 1)}
                 />
+
+                {titleError && (
+                    <span className="text-error text-sm inline-flex items-center gap-2">
+                        <BsExclamationCircle className="text-error" />
+                        Title is required
+                    </span>
+                )}
             </label>
 
             <label className="flex flex-col gap-1">
                 Content:{' '}
                 <textarea
-                    className="input textarea w-full min-h-[100px]"
+                    className="input textarea w-full min-h-25"
                     value={content}
                     onChange={(e) => setContent(e.target.value)}
                 />

@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import bcrypt from 'bcrypt';
-import { prisma } from '@former/shared';
+import { prisma } from '@former/shared/db';
 import jwt from 'jsonwebtoken';
 import { JWT_SECRET } from '../util/config.js';
 

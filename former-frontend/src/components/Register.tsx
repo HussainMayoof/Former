@@ -1,112 +1,89 @@
 import { useEffect, useState } from 'react';
 import { useUserActions } from '../store.ts';
 import { useNavigate } from 'react-router';
+import useAppForm from '../hooks/useAppForm.tsx';
+import {
+    UserRegisterParams,
+    type UserRegisterParamsType,
+} from '@former/shared/schemas';
+import ErrorAlert from './shared/ErrorAlert.tsx';
 
 const Register = () => {
-    const [username, setUsername] = useState('');
-    const [usernameTouched, setUsernameTouched] = useState(false);
-
-    const [password, setPassword] = useState('');
-    const [passwordTouched, setPasswordTouched] = useState(false);
-
-    const [passwordConfirmation, setPasswordConfirmation] = useState('');
-    const [passwordConfirmationTouched, setPasswordConfirmationTouched] =
-        useState(false);
-
     const { register } = useUserActions();
     const navigate = useNavigate();
+
+    const [error, setError] = useState<string>('');
 
     useEffect(() => {
         document.title = 'Former - Register';
     }, []);
 
-    const handleFormSubmit = async (e: React.SubmitEvent<HTMLFormElement>) => {
-        e.preventDefault();
-        setUsernameTouched(true);
-        if (password === passwordConfirmation) {
-            try {
-                await register(username, password);
-                navigate('/', { viewTransition: true });
-            } catch (e) {
-                if (e instanceof Error) {
-                    console.log(e.message);
-                }
+    const onSubmit = async (value: UserRegisterParamsType) => {
+        try {
+            await register(value.username, value.password);
+            navigate('/', { viewTransition: true });
+        } catch (e) {
+            if (e instanceof Error) {
+                setError(e.message);
+                setTimeout(() => setError(''), 5000);
             }
         }
     };
 
+    const form = useAppForm({
+        defaultValues: {
+            username: '',
+            password: '',
+            passwordConfirmation: '',
+        },
+        validators: {
+            onChange: UserRegisterParams,
+            onSubmit: UserRegisterParams,
+        },
+        onSubmit: ({ value }) => {
+            void onSubmit(value);
+        },
+    });
+
     return (
         <form
-            onSubmit={handleFormSubmit}
             className="flex flex-col items-center gap-4 p-12 m-6 border-2 rounded-4xl"
-            noValidate
+            onSubmit={(e) => {
+                e.preventDefault();
+                void form.handleSubmit();
+            }}
         >
+            <h2 className="text-2xl">Register</h2>
+            <hr className="w-3/4" />
+
             <div className="flex flex-col gap-4 w-64">
-                <div>
-                    <label className="flex flex-col gap-1">
-                        Username:{' '}
-                        <input
-                            type="text"
-                            className="input peer"
-                            value={username}
-                            onChange={(e) => setUsername(e.target.value)}
-                            onBlur={() => setUsernameTouched(true)}
-                            required
-                            minLength={4}
-                            maxLength={20}
-                        />
-                        <p
-                            className={`text-red-500 text-sm hidden ${usernameTouched ? 'peer-invalid:block' : ''}`}
-                        >
-                            Username must be between 4 and 20 characters long
-                        </p>
-                    </label>
-                </div>
+                {error && <ErrorAlert>{error}</ErrorAlert>}
 
-                <div>
-                    <label className="flex flex-col gap-1">
-                        Password:{' '}
-                        <input
+                <form.AppField
+                    name="username"
+                    children={(field) => <field.TextField label="Username" />}
+                />
+
+                <form.AppField
+                    name="password"
+                    children={(field) => (
+                        <field.TextField label="Password" type="password" />
+                    )}
+                />
+
+                <form.AppField
+                    name="passwordConfirmation"
+                    children={(field) => (
+                        <field.TextField
+                            label="Password Confirmation"
                             type="password"
-                            className="input peer"
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
-                            onBlur={() => setPasswordTouched(true)}
-                            required
-                            minLength={6}
-                            maxLength={40}
                         />
-                        <p
-                            className={`text-red-500 text-sm hidden ${passwordTouched ? 'peer-invalid:block' : ''}`}
-                        >
-                            Password must be between 6 and 40 characters long
-                        </p>
-                    </label>
-                </div>
+                    )}
+                />
 
-                <div>
-                    <label className="flex flex-col gap-1">
-                        Confirm Password:{' '}
-                        <input
-                            type="password"
-                            className="input peer"
-                            value={passwordConfirmation}
-                            onChange={(e) =>
-                                setPasswordConfirmation(e.target.value)
-                            }
-                            onBlur={() => setPasswordConfirmationTouched(true)}
-                        />
-                        <p
-                            className={`text-red-500 text-sm ${passwordConfirmationTouched && password !== passwordConfirmation ? 'block' : 'hidden'}`}
-                        >
-                            Passwords must match
-                        </p>
-                    </label>
-                </div>
-
-                <button className="btn btn-primary" type="submit">
-                    Register
-                </button>
+                <form.AppForm>
+                    <form.SubmitButton label="Register" />
+                </form.AppForm>
             </div>
         </form>
     );

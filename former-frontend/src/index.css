@@ -33,9 +33,9 @@
 }
 
 .input {
-    @apply border border-gray-300 rounded-xl p-3 focus:outline-none;
+    @apply border border-current rounded-xl p-3 outline-none;
 }
 
 .input-sm {
-    @apply border border-gray-300 rounded-xl p-2 focus:outline-none;
+    @apply border border-current rounded-xl p-2 outline-none;
 }

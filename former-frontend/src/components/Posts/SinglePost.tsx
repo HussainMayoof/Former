@@ -1,6 +1,6 @@
 import type { PostWithUser } from '../../types.ts';
 import { useNavigate } from 'react-router';
-import UnderlinedLink from '../shared/UnderlinedLink';
+import UnderlinedLink from '../shared/UnderlinedLink.tsx';
 
 const SinglePost = ({ post }: { post: PostWithUser }) => {
     const navigate = useNavigate();

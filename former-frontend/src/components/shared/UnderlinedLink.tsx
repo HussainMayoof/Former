@@ -23,7 +23,7 @@ const UnderlinedLink = ({ to, navLink = false, children }: Props) => {
                 {' '}
                 {children}
                 <span
-                    className={`block max-w-0 group-hover:max-w-full duration-200 h-px bg-gray-400`}
+                    className={`block max-w-0 -mt-0.5 group-hover:mt-0 group-hover:max-w-full duration-200 h-px bg-gray-400`}
                 ></span>{' '}
             </NavLink>
         );
@@ -38,7 +38,7 @@ const UnderlinedLink = ({ to, navLink = false, children }: Props) => {
         >
             {children}
             <span
-                className={`block max-w-0 group-hover:max-w-full duration-200 h-px bg-gray-400`}
+                className={`block max-w-0 -mt-0.5 group-hover:mt-0 group-hover:max-w-full duration-200 h-px bg-gray-400`}
             ></span>
         </Link>
     );

@@ -1,4 +1,4 @@
-import Header from './Header.tsx';
+import Header from './Header';
 import { Outlet } from 'react-router';
 import { themeChange } from 'theme-change';
 import { useEffect } from 'react';

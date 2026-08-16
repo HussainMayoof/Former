@@ -2,7 +2,7 @@ import { Link, useParams } from 'react-router';
 import { useEffect, useState } from 'react';
 import { getPost } from '../services/PostService.ts';
 import type { PostWithUserAndTags } from '../types.ts';
-import UnderlinedLink from './shared/UnderlinedLink';
+import UnderlinedLink from './shared/UnderlinedLink.tsx';
 
 const Post = () => {
     const id = useParams().id;

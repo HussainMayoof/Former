@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useUserActions } from '../../store.ts';
+import { useUserActions } from '../store.ts';
 import { useNavigate } from 'react-router';
 
 const Register = () => {
@@ -26,7 +26,7 @@ const Register = () => {
         if (password === passwordConfirmation) {
             try {
                 await register(username, password);
-                navigate('/');
+                navigate('/', { viewTransition: true });
             } catch (e) {
                 if (e instanceof Error) {
                     console.log(e.message);

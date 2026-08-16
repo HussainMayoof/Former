@@ -9,7 +9,7 @@ const SinglePost = ({ post }: { post: PostWithUser }) => {
 
     const handleClick = (e: React.MouseEvent<HTMLDivElement>) => {
         e.preventDefault();
-        navigate(`/posts/${post.id}`);
+        navigate(`/posts/${post.id}`, { viewTransition: true });
     };
 
     return (

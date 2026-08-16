@@ -9,11 +9,7 @@ import NewPost from './components/NewPost';
 
 const App = () => {
     return (
-        <div
-            className="flex flex-col gap-4 dark:bg-gray-800 dark:text-gray-200 bg-gray-200 text-gray-800 p-4 min-h-screen"
-            data-theme="dark"
-        >
-            <title>Former</title>
+        <div className="flex flex-col gap-4 bg-base-100 p-4 min-h-screen">
             <Header />
             <Routes>
                 <Route path="/" element={<Posts />} />

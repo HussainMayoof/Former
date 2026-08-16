@@ -1,8 +1,8 @@
 import { Link, useParams } from 'react-router';
 import { useEffect, useState } from 'react';
-import { getPost } from '../../services/PostService.ts';
-import type { PostWithUserAndTags } from '../../types.ts';
-import UnderlinedLink from '../shared/UnderlinedLink';
+import { getPost } from '../services/PostService.ts';
+import type { PostWithUserAndTags } from '../types.ts';
+import UnderlinedLink from './shared/UnderlinedLink';
 
 const Post = () => {
     const id = useParams().id;
@@ -38,6 +38,7 @@ const Post = () => {
                             to={`/tags/${tag.tagName}`}
                             key={tag.tagName}
                             className="bg-blue-400 hover:bg-blue-500 transition-colors duration-300 rounded-sm py-1 px-1.5 text-sm text-black"
+                            viewTransition
                         >
                             {tag.tagName}
                         </Link>

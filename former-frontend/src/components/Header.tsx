@@ -1,6 +1,6 @@
 import { Link } from 'react-router';
-import UnderlinedLink from '../shared/UnderlinedLink';
-import { useUser, useUserActions } from '../../store.ts';
+import UnderlinedLink from './shared/UnderlinedLink';
+import { useUser, useUserActions } from '../store.ts';
 
 const Header = () => {
     const user = useUser();
@@ -10,7 +10,11 @@ const Header = () => {
         <nav className="grid grid-cols-3 items-center px-4">
             <div />
 
-            <Link to="/" className="text-2xl font-semibold text-center">
+            <Link
+                to="/"
+                className="text-2xl font-semibold text-center"
+                viewTransition
+            >
                 Former
             </Link>
 

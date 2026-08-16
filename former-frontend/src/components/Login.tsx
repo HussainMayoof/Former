@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
-import { useUserActions } from '../../store.ts';
+import { useUserActions } from '../store.ts';
 import { useNavigate } from 'react-router';
+import type { SubmitEvent } from 'react';
 
 const Login = () => {
     const [username, setUsername] = useState('');
@@ -14,11 +15,11 @@ const Login = () => {
         document.title = 'Former - Log In';
     }, []);
 
-    const handleFormSubmit = async (e: React.SubmitEvent<HTMLFormElement>) => {
+    const handleFormSubmit = async (e: SubmitEvent<HTMLFormElement>) => {
         e.preventDefault();
         try {
             await login(username, password);
-            navigate('/');
+            navigate('/', { viewTransition: true });
         } catch (e) {
             if (e instanceof Error) {
                 setError(e);

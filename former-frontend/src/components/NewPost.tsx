@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
-import { usePostsActions } from '../../store.ts';
+import { usePostsActions } from '../store.ts';
 
 const NewPost = () => {
     const [title, setTitle] = useState('');
@@ -34,7 +34,7 @@ const NewPost = () => {
         e.preventDefault();
         try {
             const post = await addPost({ title, content, tags });
-            navigate(`/posts/${post.id}`);
+            navigate(`/posts/${post.id}`, { viewTransition: true });
         } catch (e) {
             if (e instanceof Error) {
                 setError(e);

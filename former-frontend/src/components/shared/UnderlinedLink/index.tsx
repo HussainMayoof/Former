@@ -18,6 +18,7 @@ const UnderlinedLink = ({ to, navLink = false, children }: Props) => {
                 to={to}
                 className="group inline-block w-fit"
                 onClick={handleClick}
+                viewTransition
             >
                 {' '}
                 {children}
@@ -33,6 +34,7 @@ const UnderlinedLink = ({ to, navLink = false, children }: Props) => {
             to={to}
             className="group inline-block w-fit"
             onClick={handleClick}
+            viewTransition
         >
             {children}
             <span

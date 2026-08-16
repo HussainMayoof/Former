@@ -10,8 +10,26 @@
     logs: true;
 }
 
+@theme {
+    --color-tertiary: var(--tertiary-color);
+    --color-tertiary-content: var(--tertiary-color-content);
+}
+
+@plugin "daisyui/theme" {
+    name: "light";
+    --tertiary-color: var(--color-gray-400);
+    --tertiary-color-content: var(--color-gray-400);
+}
+
+/* 3. Map alternative color values for your Dark Theme */
+@plugin "daisyui/theme" {
+    name: "dark";
+    --tertiary-color: var(--color-gray-400);
+    --tertiary-color-content: var(--color-gray-400);
+}
+
 .active {
-    @apply text-gray-400;
+    @apply text-tertiary-content;
 }
 
 .input {

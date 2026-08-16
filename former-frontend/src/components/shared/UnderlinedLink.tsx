@@ -16,14 +16,14 @@ const UnderlinedLink = ({ to, navLink = false, children }: Props) => {
         return (
             <NavLink
                 to={to}
-                className="group inline-block w-fit"
+                className="group inline-block w-fit hover:text-tertiary-content duration-200"
                 onClick={handleClick}
                 viewTransition
             >
                 {' '}
                 {children}
                 <span
-                    className={`block max-w-0 -mt-0.5 group-hover:mt-0 group-hover:max-w-full duration-200 h-px bg-gray-400`}
+                    className={`block max-w-0 -mt-0.5 group-hover:max-w-full duration-200 h-px bg-tertiary-content`}
                 ></span>{' '}
             </NavLink>
         );
@@ -32,13 +32,13 @@ const UnderlinedLink = ({ to, navLink = false, children }: Props) => {
     return (
         <Link
             to={to}
-            className="group inline-block w-fit"
+            className="group inline-block w-fit hover:text-tertiary-content duration-200"
             onClick={handleClick}
             viewTransition
         >
             {children}
             <span
-                className={`block max-w-0 -mt-0.5 group-hover:mt-0 group-hover:max-w-full duration-200 h-px bg-gray-400`}
+                className={`block max-w-0 -mt-0.5 group-hover:max-w-full duration-200 h-px bg-tertiary-content`}
             ></span>
         </Link>
     );

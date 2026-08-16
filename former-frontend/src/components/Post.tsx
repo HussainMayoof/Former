@@ -48,7 +48,7 @@ const Post = () => {
             <div className="font-thin text-sm mb-2">
                 Posted by{' '}
                 <UnderlinedLink to={`/users/${post.userId}`}>
-                    <p className="font-medium hover:text-gray-400 duration-200">
+                    <p className="font-medium duration-200">
                         {post.user.displayName}
                     </p>
                 </UnderlinedLink>

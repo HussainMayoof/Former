@@ -23,13 +23,11 @@ const Header = () => {
                 {user && (
                     <>
                         <UnderlinedLink to="/posts/new" navLink>
-                            <p className="hover:text-gray-400 duration-200">
-                                New Post
-                            </p>
+                            New Post
                         </UnderlinedLink>
 
                         <button
-                            className="hover:text-gray-400 duration-200 cursor-pointer"
+                            className="hover:text-tertiary-content duration-200 cursor-pointer"
                             onClick={() => {
                                 logout();
                             }}
@@ -42,15 +40,11 @@ const Header = () => {
                 {!user && (
                     <>
                         <UnderlinedLink to="/login" navLink>
-                            <p className="hover:text-gray-400 duration-200">
-                                Log In
-                            </p>
+                            Log In
                         </UnderlinedLink>
 
                         <UnderlinedLink to="/register" navLink>
-                            <p className="hover:text-gray-400 duration-200">
-                                Register
-                            </p>
+                            Register
                         </UnderlinedLink>
                     </>
                 )}

@@ -6,6 +6,7 @@ import router from './router.tsx';
 
 createRoot(document.getElementById('root')!).render(
     <StrictMode>
+        <meta name="robots" content="noindex, nofollow" />
         <RouterProvider router={router} />
     </StrictMode>,
 );

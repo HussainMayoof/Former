@@ -24,7 +24,7 @@ const PostCard = ({ post }: { post: PostWithUser }) => {
                     </p>
                 </UnderlinedLink>
                 <p className="text-xl">{post.title}</p>
-                <p className="text-xs line-clamp-2">{post.content}</p>
+                <p className="text-xs line-clamp-3">{post.content}</p>
             </div>
 
             <hr className="min-w-3/4 my-1" />

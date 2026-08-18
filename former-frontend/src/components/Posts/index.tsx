@@ -1,14 +1,14 @@
 import { useEffect } from 'react';
 import PostCard from './PostCard.tsx';
 import { usePosts, usePostsActions } from '../../store.ts';
+import PostCardSkeleton from './PostCardSkeleton.tsx';
 
 const Posts = () => {
-    // const [posts, setPosts] = useState<PostWithUser[]>([]);
     const posts = usePosts();
     const { getPosts } = usePostsActions();
 
     useEffect(() => {
-        getPosts();
+        void getPosts();
     }, [getPosts]);
 
     useEffect(() => {
@@ -16,7 +16,14 @@ const Posts = () => {
     }, []);
 
     if (!posts) {
-        return null;
+        return (
+            <div className="flex flex-col gap-2 items-center mt-4">
+                <PostCardSkeleton />
+                <PostCardSkeleton />
+                <PostCardSkeleton />
+                <PostCardSkeleton />
+            </div>
+        );
     }
 
     return (

@@ -4,7 +4,7 @@ import { usePosts, usePostsActions } from '../../store.ts';
 import PostCardSkeleton from './PostCardSkeleton.tsx';
 
 const Posts = () => {
-    const posts = usePosts();
+    const { posts, loading } = usePosts();
     const { getPosts } = usePostsActions();
 
     useEffect(() => {
@@ -15,7 +15,7 @@ const Posts = () => {
         document.title = 'Former';
     }, []);
 
-    if (!posts) {
+    if (loading || !posts) {
         return (
             <div className="flex flex-col gap-2 items-center mt-4">
                 <PostCardSkeleton />

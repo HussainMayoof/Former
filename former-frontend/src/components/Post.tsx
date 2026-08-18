@@ -5,16 +5,20 @@ import type { PostWithUserAndTags } from '../types.ts';
 
 const Post = () => {
     const id = useParams().id;
+    const [loading, setLoading] = useState(false);
     const [post, setPost] = useState<PostWithUserAndTags>();
 
     useEffect(() => {
+        if (!id) return;
+
         const fetchPost = async () => {
-            if (id) {
-                setPost(await getPost(id));
-            }
+            setLoading(true);
+            setPost(undefined);
+            setPost(await getPost(id));
+            setLoading(false);
         };
 
-        fetchPost();
+        void fetchPost();
     }, [id]);
 
     useEffect(() => {
@@ -25,7 +29,7 @@ const Post = () => {
 
     if (!id) return null;
 
-    if (!post)
+    if (loading || !post)
         return (
             <div className="p-12 m-6 border-2 rounded-4xl flex-1 flex flex-col h-full">
                 <div className="skeleton h-4.5 w-1/8"></div>

@@ -44,6 +44,7 @@ export interface UserState {
 
 export interface PostsState {
     posts: PostWithUser[];
+    loading: boolean;
     actions: {
         getPosts: () => Promise<void>;
         addPost: (post: NewPost) => Promise<Prisma.PostModel>;

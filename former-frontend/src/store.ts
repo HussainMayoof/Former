@@ -6,6 +6,7 @@ import {
 } from './services/UserService.ts';
 import { persist } from 'zustand/middleware';
 import { createPost, getAllPosts } from './services/PostService.ts';
+import { useShallow } from 'zustand/react/shallow';
 
 export const useUserStore = create<UserState>()(
     persist(
@@ -42,8 +43,13 @@ export const useUserActions = () => useUserStore((state) => state.actions);
 
 const usePostsStore = create<PostsState>((set) => ({
     posts: [],
+    loading: false,
     actions: {
-        getPosts: async () => set({ posts: await getAllPosts() }),
+        getPosts: async () => {
+            set({ loading: true });
+            set({ posts: await getAllPosts() });
+            set({ loading: false });
+        },
         addPost: async (post) => {
             const response = await createPost(post);
             if (!response.error) {
@@ -56,5 +62,11 @@ const usePostsStore = create<PostsState>((set) => ({
     },
 }));
 
-export const usePosts = () => usePostsStore((state) => state.posts);
+export const usePosts = () =>
+    usePostsStore(
+        useShallow((state) => ({
+            posts: state.posts,
+            loading: state.loading,
+        })),
+    );
 export const usePostsActions = () => usePostsStore((state) => state.actions);

@@ -1,2 +1,2 @@
-release: npx prisma migrate deploy --schema=./packages/shared/prisma/schema.prisma
+release: npx prisma migrate deploy --config ../packages/shared/prisma.config.ts
 web: npm start

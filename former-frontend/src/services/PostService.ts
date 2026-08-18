@@ -33,3 +33,22 @@ export const createPost = async (post: NewPost) => {
 
     return await response.json();
 };
+
+export const votePost = async (id: string, upvote: boolean) => {
+    const token = useUserStore.getState().user?.token;
+
+    const response = await fetch(`${apiURL}/posts/${id}`, {
+        method: 'POST',
+        headers: {
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ upvote }),
+    });
+
+    if (!response.ok) {
+        return { error: (await response.json()).error };
+    }
+
+    return await response.json();
+};

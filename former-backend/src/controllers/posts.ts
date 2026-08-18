@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { prisma } from '@former/shared/db';
+import { Prisma, prisma } from '@former/shared/db';
 import { tokenExtractor } from '../util/middleware.js';
 import type { TokenRequest } from '../types.js';
 import { PostCreateInput, PostParams } from '@former/shared/schemas';
@@ -40,6 +40,118 @@ PostsRouter.get('/:id', async (req, res) => {
     });
 
     res.json(post);
+});
+
+// Vote on a post
+PostsRouter.post('/:id', tokenExtractor, async (req: TokenRequest, res) => {
+    const { upvote } = req.body;
+    if (!req.token) {
+        return res.status(401).json({ error: 'Unauthorized' });
+    }
+
+    if (!req.params.id || typeof req.params.id !== 'string') {
+        return res.status(400).json({ error: 'Post ID is required' });
+    }
+
+    if (typeof upvote !== 'boolean') {
+        return res.status(400).json({ error: 'Invalid vote type' });
+    }
+
+    const existingVote = await prisma.vote.findUnique({
+        where: {
+            // eslint-disable-next-line camelcase -- Prisma provides this by default
+            postId_userId: {
+                postId: req.params.id,
+                userId: req.token.id,
+            },
+        },
+    });
+
+    let post;
+    try {
+        if (!existingVote) {
+            post = await prisma.post.update({
+                where: { id: req.params.id },
+                data: {
+                    score: upvote ? { increment: 1 } : { decrement: 1 },
+                },
+                include: {
+                    user: {
+                        select: {
+                            displayName: true,
+                        },
+                    },
+                    tags: {
+                        select: {
+                            tagName: true,
+                        },
+                    },
+                },
+            });
+        } else if (existingVote.upvote !== upvote) {
+            post = await prisma.post.update({
+                where: { id: req.params.id },
+                data: {
+                    score: upvote ? { increment: 2 } : { decrement: 2 },
+                },
+                include: {
+                    user: {
+                        select: {
+                            displayName: true,
+                        },
+                    },
+                    tags: {
+                        select: {
+                            tagName: true,
+                        },
+                    },
+                },
+            });
+        } else {
+            post = await prisma.post.findUnique({
+                where: { id: req.params.id },
+                include: {
+                    user: {
+                        select: {
+                            displayName: true,
+                        },
+                    },
+                    tags: {
+                        select: {
+                            tagName: true,
+                        },
+                    },
+                },
+            });
+        }
+    } catch (e) {
+        if (e instanceof Prisma.PrismaClientKnownRequestError) {
+            if (e.code === 'P2025') {
+                return res.status(404).json({ error: 'Post not found' });
+            }
+        }
+        return res.status(500).json({ error: 'Internal server error' });
+    }
+
+    await prisma.vote.upsert({
+        where: {
+            // eslint-disable-next-line camelcase -- Prisma provides this by default
+            postId_userId: {
+                postId: req.params.id,
+                userId: req.token.id,
+            },
+        },
+        update: {
+            upvote,
+        },
+        create: {
+            postId: req.params.id,
+            userId: req.token.id,
+            upvote,
+        },
+    });
+
+    return res.json(post);
 });
 
 //Create a new post

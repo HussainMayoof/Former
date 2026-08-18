@@ -93,3 +93,4 @@ The project requires `.env` files in both the `former-backend` and `former-front
 - [ ] Add pagination to searching or infinite scrolling
 - [ ] Add email verification
 - [ ] Add Redis caching
+- [ ] Create a logo and icon 

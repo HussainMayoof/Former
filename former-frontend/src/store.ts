@@ -1,11 +1,16 @@
 import { create } from 'zustand';
-import type { PostsState, UserState } from './types.ts';
+import type { PostsState, PostState, UserState } from './types.ts';
 import {
     login as loginRequest,
     register as registerRequest,
 } from './services/UserService.ts';
 import { persist } from 'zustand/middleware';
-import { createPost, getAllPosts } from './services/PostService.ts';
+import {
+    createPost,
+    getAllPosts,
+    getPost,
+    votePost,
+} from './services/PostService.ts';
 import { useShallow } from 'zustand/react/shallow';
 
 export const useUserStore = create<UserState>()(
@@ -70,3 +75,35 @@ export const usePosts = () =>
         })),
     );
 export const usePostsActions = () => usePostsStore((state) => state.actions);
+
+const usePostStore = create<PostState>((set, get) => ({
+    post: undefined,
+    loading: false,
+    actions: {
+        getPost: async (id: string) => {
+            set({ loading: true });
+
+            const post = await getPost(id);
+            set({ post, loading: false });
+        },
+        votePost: async (upvote) => {
+            const post = get().post;
+
+            if (post) {
+                const updatedPost = await votePost(post.id, upvote);
+                set({
+                    post: updatedPost,
+                });
+            }
+        },
+    },
+}));
+
+export const usePost = () =>
+    usePostStore(
+        useShallow((state) => ({
+            post: state.post,
+            loading: state.loading,
+        })),
+    );
+export const usePostActions = () => usePostStore((state) => state.actions);

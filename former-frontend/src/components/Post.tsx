@@ -1,31 +1,30 @@
 import { Link, useParams } from 'react-router';
-import { useEffect, useState } from 'react';
-import { getPost } from '../services/PostService.ts';
-import type { PostWithUserAndTags } from '../types.ts';
+import { useEffect } from 'react';
+import { usePost, usePostActions, useUser } from '../store.ts';
 
 const Post = () => {
     const id = useParams().id;
-    const [loading, setLoading] = useState(false);
-    const [post, setPost] = useState<PostWithUserAndTags>();
+
+    const { post, loading } = usePost();
+    const { getPost, votePost } = usePostActions();
+
+    const user = useUser();
 
     useEffect(() => {
         if (!id) return;
-
-        const fetchPost = async () => {
-            setLoading(true);
-            setPost(undefined);
-            setPost(await getPost(id));
-            setLoading(false);
-        };
-
-        void fetchPost();
-    }, [id]);
+        void getPost(id);
+    }, [id, getPost]);
 
     useEffect(() => {
         if (post?.title) {
             document.title = `Former - ${post.title}`;
         }
     }, [post?.title]);
+
+    const vote = async (upvote: boolean) => {
+        if (!id) return;
+        void votePost(upvote);
+    };
 
     if (!id) return null;
 
@@ -97,7 +96,27 @@ const Post = () => {
             </div>
             <hr />
 
-            <p className="mt-2">{post.content}</p>
+            <p className="my-2">{post.content}</p>
+
+            <hr />
+
+            {user && (
+                <div className="flex gap-2 items-center my-2">
+                    <button
+                        className="btn btn-primary"
+                        onClick={() => vote(true)}
+                    >
+                        Upvote
+                    </button>
+                    <p>{post.score}</p>
+                    <button
+                        className="btn btn-error"
+                        onClick={() => vote(false)}
+                    >
+                        Downvote
+                    </button>
+                </div>
+            )}
         </div>
     );
 };

@@ -50,3 +50,12 @@ export interface PostsState {
         addPost: (post: NewPost) => Promise<Prisma.PostModel>;
     };
 }
+
+export interface PostState {
+    post?: PostWithUserAndTags;
+    loading: boolean;
+    actions: {
+        getPost: (id: string) => Promise<void>;
+        votePost: (upvote: boolean) => Promise<void>;
+    };
+}

@@ -19,6 +19,7 @@ model User {
   comments     Comment[]
   createdAt    DateTime  @default(now())
   updatedAt    DateTime  @updatedAt
+  votes        Vote[]
 }
 
 model Tag {
@@ -39,6 +40,17 @@ model Post {
   userId    String
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
+  votes     Vote[]
+}
+
+model Vote {
+  post   Post    @relation(fields: [postId], references: [id])
+  postId String
+  user   User    @relation(fields: [userId], references: [id])
+  userId String
+  upvote Boolean
+
+  @@id([postId, userId])
 }
 
 model Comment {

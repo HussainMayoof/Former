@@ -10,7 +10,16 @@ export const getAllPosts = async () => {
 };
 
 export const getPost = async (id: string) => {
-    const response = await fetch(`${apiURL}/posts/${id}`);
+    const token = useUserStore.getState().user?.token;
+
+    const response = await fetch(`${apiURL}/posts/${id}`, {
+        headers: token
+            ? {
+                  Authorization: `Bearer ${token}`,
+                  'Content-Type': 'application/json',
+              }
+            : undefined,
+    });
     const post: PostWithUserAndTags = await response.json();
     return post;
 };
@@ -37,13 +46,31 @@ export const createPost = async (post: NewPost) => {
 export const votePost = async (id: string, upvote: boolean) => {
     const token = useUserStore.getState().user?.token;
 
-    const response = await fetch(`${apiURL}/posts/${id}`, {
+    const response = await fetch(`${apiURL}/posts/${id}/vote`, {
         method: 'POST',
         headers: {
             Authorization: `Bearer ${token}`,
             'Content-Type': 'application/json',
         },
         body: JSON.stringify({ upvote }),
+    });
+
+    if (!response.ok) {
+        return { error: (await response.json()).error };
+    }
+
+    return await response.json();
+};
+
+export const unvotePost = async (id: string) => {
+    const token = useUserStore.getState().user?.token;
+
+    const response = await fetch(`${apiURL}/posts/${id}/vote`, {
+        method: 'DELETE',
+        headers: {
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'application/json',
+        },
     });
 
     if (!response.ok) {

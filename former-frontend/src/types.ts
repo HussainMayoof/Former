@@ -26,6 +26,10 @@ export type PostWithUserAndTags = Prisma.PostGetPayload<{
     };
 }>;
 
+export interface SinglePost extends PostWithUserAndTags {
+    userVote?: boolean;
+}
+
 export type NewPost = PostCreateInputType;
 
 export interface AuthenticatedUser {
@@ -57,5 +61,6 @@ export interface PostState {
     actions: {
         getPost: (id: string) => Promise<void>;
         votePost: (upvote: boolean) => Promise<void>;
+        unvotePost: () => Promise<void>;
     };
 }

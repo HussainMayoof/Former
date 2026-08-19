@@ -30,3 +30,31 @@ export const tokenExtractor = (
 
     return next();
 };
+
+export const optionalTokenExtractor = (
+    req: TokenRequest,
+    _res: Response,
+    next: NextFunction,
+) => {
+    const authorization = req.headers.authorization;
+    if (!authorization || !authorization.startsWith('Bearer ')) {
+        return next();
+    }
+
+    const token = authorization.substring(7);
+
+    let decodedToken;
+    try {
+        decodedToken = jwt.verify(token, JWT_SECRET);
+    } catch {
+        return next();
+    }
+
+    if (typeof decodedToken === 'string') {
+        return next();
+    }
+
+    req.token = decodedToken;
+
+    return next();
+};

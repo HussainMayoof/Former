@@ -9,6 +9,7 @@ import {
     createPost,
     getAllPosts,
     getPost,
+    unvotePost,
     votePost,
 } from './services/PostService.ts';
 import { useShallow } from 'zustand/react/shallow';
@@ -91,6 +92,16 @@ const usePostStore = create<PostState>((set, get) => ({
 
             if (post) {
                 const updatedPost = await votePost(post.id, upvote);
+                set({
+                    post: updatedPost,
+                });
+            }
+        },
+        unvotePost: async () => {
+            const post = get().post;
+
+            if (post) {
+                const updatedPost = await unvotePost(post.id);
                 set({
                     post: updatedPost,
                 });

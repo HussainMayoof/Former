@@ -1,7 +1,7 @@
 /*
   Warnings:
 
-  - The primary key for the `Post` table will be changed. If it partially fails, the table could be left without primary key constraint.
+  - The primary key for the `PostItem` table will be changed. If it partially fails, the table could be left without primary key constraint.
   - The primary key for the `User` table will be changed. If it partially fails, the table could be left without primary key constraint.
   - The primary key for the `_PostToTag` table will be changed. If it partially fails, the table could be left without primary key constraint.
   - Made the column `displayName` on table `User` required. This step will fail if there are existing NULL values in that column.

@@ -1,58 +1,14 @@
-import { Link, useParams } from 'react-router';
-import { useEffect } from 'react';
-import { usePost, usePostActions, useUser } from '../store.ts';
+import { Link } from 'react-router';
+import type { PostWithUserAndTags } from '../../types.ts';
+import { usePostActions, useUser } from '../../store.ts';
 
-const Post = () => {
-    const id = useParams().id;
+interface Props {
+    post: PostWithUserAndTags;
+}
 
-    const { post, loading } = usePost();
-    const { getPost, votePost } = usePostActions();
-
+const PostItem = ({ post }: Props) => {
     const user = useUser();
-
-    useEffect(() => {
-        if (!id) return;
-        void getPost(id);
-    }, [id, getPost]);
-
-    useEffect(() => {
-        if (post?.title) {
-            document.title = `Former - ${post.title}`;
-        }
-    }, [post?.title]);
-
-    const vote = async (upvote: boolean) => {
-        if (!id) return;
-        void votePost(upvote);
-    };
-
-    if (!id) return null;
-
-    if (loading || !post)
-        return (
-            <div className="p-12 m-6 border-2 rounded-4xl flex-1 flex flex-col h-full">
-                <div className="skeleton h-4.5 w-1/8"></div>
-                <div className="flex gap-2 my-2">
-                    <div className="skeleton rounded-sm py-1 px-1.5 h-5 w-1/40"></div>
-                    <div className="skeleton rounded-sm py-1 px-1.5 h-5 w-1/40"></div>
-                    <div className="skeleton rounded-sm py-1 px-1.5 h-5 w-1/40"></div>
-                    <div className="skeleton rounded-sm py-1 px-1.5 h-5 w-1/40"></div>
-                    <div className="skeleton rounded-sm py-1 px-1.5 h-5 w-1/40"></div>
-                </div>
-
-                <div className="flex gap-2 items-center">
-                    <div className="avatar avatar-placeholder cursor-pointer">
-                        <div className="skeleton w-6 rounded-full"></div>
-                    </div>
-
-                    <div className="skeleton h-3 w-1/16"></div>
-                </div>
-
-                <hr className="text-base-300 my-2" />
-
-                <div className="skeleton flex-1 w-full"></div>
-            </div>
-        );
+    const { votePost } = usePostActions();
 
     return (
         <div className="p-12 m-6 border-2 rounded-4xl flex-1">
@@ -94,24 +50,25 @@ const Post = () => {
                     </p>
                 </Link>
             </div>
-            <hr />
 
-            <p className="my-2">{post.content}</p>
+            <hr className="text-tertiary-content opacity-25" />
 
-            <hr />
+            <p className="my-4">{post.content}</p>
+
+            <hr className="text-tertiary-content opacity-25" />
 
             {user && (
-                <div className="flex gap-2 items-center my-2">
+                <div className="flex gap-2 items-center my-4">
                     <button
                         className="btn btn-primary"
-                        onClick={() => vote(true)}
+                        onClick={() => votePost(true)}
                     >
                         Upvote
                     </button>
                     <p>{post.score}</p>
                     <button
                         className="btn btn-error"
-                        onClick={() => vote(false)}
+                        onClick={() => votePost(false)}
                     >
                         Downvote
                     </button>
@@ -121,4 +78,4 @@ const Post = () => {
     );
 };
 
-export default Post;
+export default PostItem;

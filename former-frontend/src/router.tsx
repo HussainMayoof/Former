@@ -3,7 +3,7 @@ import Layout from './components/Layout.tsx';
 import Posts from './components/Posts';
 import Users from './components/Users.tsx';
 import NewPost from './components/NewPost.tsx';
-import Post from './components/Post.tsx';
+import Post from './components/Post/index.tsx';
 import Login from './components/Login.tsx';
 import Register from './components/Register.tsx';
 

@@ -1,11 +1,21 @@
-import type { NewPost, PostWithUser, PostWithUserAndTags } from '../types';
+import type { NewPost, Post, SinglePost } from '../types';
 import { useUserStore } from '../store.ts';
 
 const apiURL = import.meta.env.VITE_API_URL;
 
 export const getAllPosts = async () => {
-    const response = await fetch(`${apiURL}/posts`);
-    const posts: PostWithUser[] = await response.json();
+    const token = useUserStore.getState().user?.token;
+
+    const response = await fetch(`${apiURL}/posts/`, {
+        headers: token
+            ? {
+                  Authorization: `Bearer ${token}`,
+                  'Content-Type': 'application/json',
+              }
+            : undefined,
+    });
+
+    const posts: Post[] = await response.json();
     return posts;
 };
 
@@ -20,7 +30,7 @@ export const getPost = async (id: string) => {
               }
             : undefined,
     });
-    const post: PostWithUserAndTags = await response.json();
+    const post: SinglePost = await response.json();
     return post;
 };
 

@@ -26,6 +26,10 @@ export type PostWithUserAndTags = Prisma.PostGetPayload<{
     };
 }>;
 
+export interface Post extends PostWithUser {
+    userVote?: boolean;
+}
+
 export interface SinglePost extends PostWithUserAndTags {
     userVote?: boolean;
 }
@@ -47,11 +51,13 @@ export interface UserState {
 }
 
 export interface PostsState {
-    posts: PostWithUser[];
+    posts: Post[];
     loading: boolean;
     actions: {
         getPosts: () => Promise<void>;
         addPost: (post: NewPost) => Promise<Prisma.PostModel>;
+        votePost: (id: string, upvote: boolean) => Promise<void>;
+        unvotePost: (id: string) => Promise<void>;
     };
 }
 

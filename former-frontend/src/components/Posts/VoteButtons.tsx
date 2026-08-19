@@ -1,4 +1,4 @@
-import { usePostActions } from '../../store.ts';
+import { usePostsActions } from '../../store.ts';
 import {
     BsCaretDown,
     BsCaretDownFill,
@@ -7,23 +7,24 @@ import {
 } from 'react-icons/bs';
 
 interface Props {
+    id: string;
     score: number;
     userVote?: boolean;
 }
 
-const VoteButtons = ({ score, userVote }: Props) => {
-    const { votePost, unvotePost } = usePostActions();
+const VoteButtons = ({ id, score, userVote }: Props) => {
+    const { votePost, unvotePost } = usePostsActions();
 
     const vote = (vote: boolean) => {
         if (userVote === vote) {
-            void unvotePost();
+            void unvotePost(id);
         } else {
-            void votePost(vote);
+            void votePost(id, vote);
         }
     };
 
     return (
-        <div className="flex gap-2 items-center text-xl my-4">
+        <div className="flex flex-col items-center text-xl my-2">
             <button
                 className="cursor-pointer"
                 onClick={(e) => {

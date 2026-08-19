@@ -47,7 +47,7 @@ export const useUserStore = create<UserState>()(
 export const useUser = () => useUserStore((state) => state.user);
 export const useUserActions = () => useUserStore((state) => state.actions);
 
-const usePostsStore = create<PostsState>((set) => ({
+const usePostsStore = create<PostsState>((set, get) => ({
     posts: [],
     loading: false,
     actions: {
@@ -64,6 +64,30 @@ const usePostsStore = create<PostsState>((set) => ({
                 throw new Error(response.error);
             }
             return response;
+        },
+        votePost: async (id, upvote) => {
+            const posts = get().posts;
+
+            if (posts.find((post) => post.id === id)) {
+                const updatedPost = await votePost(id, upvote);
+                set({
+                    posts: posts.map((post) =>
+                        post.id === id ? updatedPost : post,
+                    ),
+                });
+            }
+        },
+        unvotePost: async (id) => {
+            const posts = get().posts;
+
+            if (posts.find((post) => post.id === id)) {
+                const updatedPost = await unvotePost(id);
+                set({
+                    posts: posts.map((post) =>
+                        post.id === id ? updatedPost : post,
+                    ),
+                });
+            }
         },
     },
 }));

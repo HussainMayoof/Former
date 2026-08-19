@@ -1,13 +1,13 @@
 import { Router } from 'express';
 import { Prisma, prisma } from '@former/shared/db';
 import { optionalTokenExtractor, tokenExtractor } from '../util/middleware.js';
-import type { TokenRequest } from '../types.js';
+import type { Post, TokenRequest } from '../types.js';
 import { PostCreateInput, PostParams } from '@former/shared/schemas';
 
 const PostsRouter = Router();
 
 //Get all posts
-PostsRouter.get('/', async (_req, res) => {
+PostsRouter.get('/', optionalTokenExtractor, async (req: TokenRequest, res) => {
     const posts = await prisma.post.findMany({
         include: {
             user: {
@@ -17,7 +17,34 @@ PostsRouter.get('/', async (_req, res) => {
             },
         },
     });
-    res.json(posts);
+
+    let postsResponse: Post[] = [];
+    if (req.token) {
+        for (const post of posts) {
+            const vote = await prisma.vote.findUnique({
+                where: {
+                    // eslint-disable-next-line camelcase -- Prisma provides this by default
+                    postId_userId: {
+                        postId: post.id,
+                        userId: req.token.id,
+                    },
+                },
+            });
+
+            if (vote) {
+                const userVote = vote.upvote;
+                postsResponse = postsResponse.concat({ ...post, userVote });
+            } else {
+                postsResponse = postsResponse.concat({ ...post });
+            }
+        }
+    } else {
+        postsResponse = posts;
+    }
+
+    console.log(postsResponse);
+
+    res.json(postsResponse);
 });
 
 //Get one post

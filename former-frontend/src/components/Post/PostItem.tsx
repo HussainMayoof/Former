@@ -1,6 +1,7 @@
 import { Link } from 'react-router';
 import type { SinglePost } from '../../types.ts';
-import { usePostActions, useUser } from '../../store.ts';
+import { useUser } from '../../store.ts';
+import VoteButtons from './VoteButtons.tsx';
 
 interface Props {
     post: SinglePost;
@@ -8,15 +9,6 @@ interface Props {
 
 const PostItem = ({ post }: Props) => {
     const user = useUser();
-    const { votePost, unvotePost } = usePostActions();
-
-    const vote = (vote: boolean) => {
-        if ('userVote' in post && post.userVote === vote) {
-            void unvotePost();
-        } else {
-            void votePost(vote);
-        }
-    };
 
     return (
         <div className="p-12 m-6 border-2 rounded-4xl flex-1">
@@ -66,32 +58,7 @@ const PostItem = ({ post }: Props) => {
             <hr className="text-tertiary-content opacity-25" />
 
             {user && (
-                <div className="flex gap-2 items-center my-4">
-                    <button
-                        className="btn btn-primary"
-                        onClick={() => vote(true)}
-                    >
-                        Upvote
-                    </button>
-
-                    {'userVote' in post ? (
-                        <p
-                            className={
-                                post.userVote ? 'text-accent' : 'text-error'
-                            }
-                        >
-                            {post.score}
-                        </p>
-                    ) : (
-                        <p>{post.score}</p>
-                    )}
-                    <button
-                        className="btn btn-error"
-                        onClick={() => vote(false)}
-                    >
-                        Downvote
-                    </button>
-                </div>
+                <VoteButtons score={post.score} userVote={post.userVote} />
             )}
         </div>
     );

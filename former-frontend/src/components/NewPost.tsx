@@ -18,7 +18,7 @@ const NewPost = () => {
     const { addPost } = usePostsActions();
 
     useEffect(() => {
-        document.title = 'Former - New PostItem';
+        document.title = 'Former - New Post';
     }, []);
 
     const handleCreateNewTag = (e: MouseEvent<HTMLButtonElement>) => {

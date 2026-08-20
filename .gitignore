@@ -13,7 +13,7 @@ dist/
 dist-ssr
 *.local
 generated/
-tsconfig.tsbuildinfo
+*.tsbuildinfo
 
 # Editor directories and files
 .vscode/*

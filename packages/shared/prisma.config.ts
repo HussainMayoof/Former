@@ -1,6 +1,7 @@
 import 'dotenv/config';
-import { defineConfig } from 'prisma/config';
+import {defineConfig} from 'prisma/config';
 
+// noinspection JSUnusedGlobalSymbols
 export default defineConfig({
     schema: 'prisma/schema.prisma',
     migrations: {

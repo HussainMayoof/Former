@@ -1,10 +1,12 @@
-import { usePostsActions } from '../../store.ts';
+import { usePostsActions, useUser } from '../../store.ts';
 import {
     BsCaretDown,
     BsCaretDownFill,
     BsCaretUp,
     BsCaretUpFill,
 } from 'react-icons/bs';
+import { useState } from 'react';
+import WarningAlert from '../shared/WarningAlert.tsx';
 
 interface Props {
     id: string;
@@ -14,8 +16,14 @@ interface Props {
 
 const VoteButtons = ({ id, score, userVote }: Props) => {
     const { votePost, unvotePost } = usePostsActions();
+    const user = useUser();
+    const [showWarning, setShowWarning] = useState(false);
 
     const vote = (vote: boolean) => {
+        if (!user) {
+            setShowWarning(true);
+            setTimeout(() => setShowWarning(false), 2000);
+        }
         if (userVote === vote) {
             void unvotePost(id);
         } else {
@@ -25,6 +33,10 @@ const VoteButtons = ({ id, score, userVote }: Props) => {
 
     return (
         <div className="flex flex-col items-center text-xl my-2">
+            <WarningAlert
+                show={showWarning}
+                message="You must be logged in to do that!"
+            />
             <button
                 className="cursor-pointer"
                 onClick={(e) => {

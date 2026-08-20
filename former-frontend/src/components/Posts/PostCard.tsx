@@ -2,7 +2,6 @@ import type { Post } from '../../types.ts';
 import { useNavigate } from 'react-router';
 import UnderlinedLink from '../shared/UnderlinedLink.tsx';
 import VoteButtons from './VoteButtons.tsx';
-import { useUser } from '../../store.ts';
 import type { MouseEvent } from 'react';
 
 interface Props {
@@ -11,7 +10,6 @@ interface Props {
 
 const PostCard = ({ post }: Props) => {
     const navigate = useNavigate();
-    const user = useUser();
 
     if (!post) return;
 
@@ -36,15 +34,13 @@ const PostCard = ({ post }: Props) => {
                     <p className="text-xs line-clamp-3">{post.content}</p>
                 </div>
 
-                {user && (
-                    <div className="self-center me-2">
-                        <VoteButtons
-                            id={post.id}
-                            score={post.score}
-                            userVote={post.userVote}
-                        />
-                    </div>
-                )}
+                <div className="self-center me-2">
+                    <VoteButtons
+                        id={post.id}
+                        score={post.score}
+                        userVote={post.userVote}
+                    />
+                </div>
             </div>
 
             <hr className="min-w-3/4 my-1" />

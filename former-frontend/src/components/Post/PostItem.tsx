@@ -1,6 +1,5 @@
 import { Link } from 'react-router';
 import type { SinglePost } from '../../types.ts';
-import { useUser } from '../../store.ts';
 import VoteButtons from './VoteButtons.tsx';
 
 interface Props {
@@ -8,8 +7,6 @@ interface Props {
 }
 
 const PostItem = ({ post }: Props) => {
-    const user = useUser();
-
     return (
         <div className="p-12 m-6 border-2 rounded-4xl flex-1">
             <p className="font-semibold text-lg">{post.title}</p>
@@ -57,9 +54,7 @@ const PostItem = ({ post }: Props) => {
 
             <hr className="text-tertiary-content opacity-25" />
 
-            {user && (
-                <VoteButtons score={post.score} userVote={post.userVote} />
-            )}
+            <VoteButtons score={post.score} userVote={post.userVote} />
         </div>
     );
 };

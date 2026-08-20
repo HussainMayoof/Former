@@ -83,7 +83,6 @@ The project requires `.env` files in both the `former-backend` and `former-front
 
 - [ ] Show comments on posts
 - [ ] Allow comment creation
-- [ ] Add a voting system
 - [ ] Add a profile page
 - [ ] Add a search bar
 - [ ] Add sorting and advanced search

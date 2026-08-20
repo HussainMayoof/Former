@@ -20,11 +20,10 @@ const UnderlinedLink = ({ to, navLink = false, children }: Props) => {
                 onClick={handleClick}
                 viewTransition
             >
-                {' '}
                 {children}
                 <span
                     className={`block max-w-0 -mt-0.5 group-hover:max-w-full duration-200 h-px bg-tertiary-content`}
-                ></span>{' '}
+                ></span>
             </NavLink>
         );
     }

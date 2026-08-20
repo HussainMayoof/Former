@@ -3,48 +3,49 @@ import { useUserStore } from '../store.ts';
 
 const apiURL = import.meta.env.VITE_API_URL;
 
-export const getAllPosts = async () => {
+const authorisedRequest = async (
+    url: string,
+    method: 'GET' | 'POST' | 'DELETE',
+    allowUnauthorised: boolean = false,
+    body?: object,
+) => {
     const token = useUserStore.getState().user?.token;
 
-    const response = await fetch(`${apiURL}/posts/`, {
-        headers: token
-            ? {
-                  Authorization: `Bearer ${token}`,
-                  'Content-Type': 'application/json',
-              }
-            : undefined,
-    });
+    if (!token) {
+        if (allowUnauthorised) {
+            return await fetch(`${apiURL}/${url}`, {
+                method,
+                body: body ? JSON.stringify(body) : undefined,
+            });
+        } else {
+            throw new Error('Unauthorised');
+        }
+    }
 
+    return await fetch(`${apiURL}/${url}`, {
+        method,
+        headers: {
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'application/json',
+        },
+        body: body ? JSON.stringify(body) : undefined,
+    });
+};
+
+export const getAllPosts = async () => {
+    const response = await authorisedRequest('posts', 'GET', true);
     const posts: Post[] = await response.json();
     return posts;
 };
 
 export const getPost = async (id: string) => {
-    const token = useUserStore.getState().user?.token;
-
-    const response = await fetch(`${apiURL}/posts/${id}`, {
-        headers: token
-            ? {
-                  Authorization: `Bearer ${token}`,
-                  'Content-Type': 'application/json',
-              }
-            : undefined,
-    });
+    const response = await authorisedRequest(`posts/${id}`, 'GET', true);
     const post: SinglePost = await response.json();
     return post;
 };
 
 export const createPost = async (post: NewPost) => {
-    const token = useUserStore.getState().user?.token;
-
-    const response = await fetch(`${apiURL}/posts`, {
-        method: 'POST',
-        headers: {
-            Authorization: `Bearer ${token}`,
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(post),
-    });
+    const response = await authorisedRequest('posts', 'POST', false, post);
 
     if (!response.ok) {
         return { error: (await response.json()).error };
@@ -54,16 +55,12 @@ export const createPost = async (post: NewPost) => {
 };
 
 export const votePost = async (id: string, upvote: boolean) => {
-    const token = useUserStore.getState().user?.token;
-
-    const response = await fetch(`${apiURL}/posts/${id}/vote`, {
-        method: 'POST',
-        headers: {
-            Authorization: `Bearer ${token}`,
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ upvote }),
-    });
+    const response = await authorisedRequest(
+        `posts/${id}/vote`,
+        'POST',
+        false,
+        { upvote },
+    );
 
     if (!response.ok) {
         return { error: (await response.json()).error };
@@ -73,15 +70,11 @@ export const votePost = async (id: string, upvote: boolean) => {
 };
 
 export const unvotePost = async (id: string) => {
-    const token = useUserStore.getState().user?.token;
-
-    const response = await fetch(`${apiURL}/posts/${id}/vote`, {
-        method: 'DELETE',
-        headers: {
-            Authorization: `Bearer ${token}`,
-            'Content-Type': 'application/json',
-        },
-    });
+    const response = await authorisedRequest(
+        `posts/${id}/vote`,
+        'DELETE',
+        false,
+    );
 
     if (!response.ok) {
         return { error: (await response.json()).error };

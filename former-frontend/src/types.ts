@@ -70,3 +70,12 @@ export interface PostState {
         unvotePost: () => Promise<void>;
     };
 }
+
+export type AlertType = 'Error' | 'Warning';
+
+export interface AlertState {
+    alert: { show: boolean; type: AlertType; message: string };
+    actions: {
+        setAlert: (type: AlertType, message: string, duration?: number) => void;
+    };
+}

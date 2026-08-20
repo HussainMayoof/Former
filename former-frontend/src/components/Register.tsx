@@ -1,18 +1,17 @@
-import { useEffect, useState } from 'react';
-import { useUserActions } from '../store.ts';
+import { useEffect } from 'react';
+import { useAlertActions, useUserActions } from '../store.ts';
 import { useNavigate } from 'react-router';
 import useAppForm from '../hooks/useAppForm.tsx';
 import {
     UserRegisterParams,
     type UserRegisterParamsType,
 } from '@former/shared/schemas';
-import ErrorAlert from './shared/ErrorAlert.tsx';
 
 const Register = () => {
     const { register } = useUserActions();
     const navigate = useNavigate();
 
-    const [error, setError] = useState<string>('');
+    const { setAlert } = useAlertActions();
 
     useEffect(() => {
         document.title = 'Former - Register';
@@ -24,8 +23,7 @@ const Register = () => {
             navigate('/', { viewTransition: true });
         } catch (e) {
             if (e instanceof Error) {
-                setError(e.message);
-                setTimeout(() => setError(''), 5000);
+                setAlert('Error', e.message, 5000);
             }
         }
     };
@@ -57,8 +55,6 @@ const Register = () => {
             <hr className="w-3/4" />
 
             <div className="flex flex-col gap-4 w-64">
-                {error && <ErrorAlert>{error}</ErrorAlert>}
-
                 <form.AppField
                     name="username"
                     children={(field) => <field.TextField label="Username" />}

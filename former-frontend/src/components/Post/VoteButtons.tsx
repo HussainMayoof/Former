@@ -1,12 +1,10 @@
-import { usePostActions, useUser } from '../../store.ts';
+import { useAlertActions, usePostActions, useUser } from '../../store.ts';
 import {
     BsCaretDown,
     BsCaretDownFill,
     BsCaretUp,
     BsCaretUpFill,
 } from 'react-icons/bs';
-import WarningAlert from '../shared/WarningAlert.tsx';
-import { useState } from 'react';
 
 interface Props {
     score: number;
@@ -16,12 +14,12 @@ interface Props {
 const VoteButtons = ({ score, userVote }: Props) => {
     const { votePost, unvotePost } = usePostActions();
     const user = useUser();
-    const [showWarning, setShowWarning] = useState(false);
+
+    const { setAlert } = useAlertActions();
 
     const vote = (vote: boolean) => {
         if (!user) {
-            setShowWarning(true);
-            setTimeout(() => setShowWarning(false), 2000);
+            setAlert('Warning', 'You must be logged in to do that!', 2000);
         }
         if (userVote === vote) {
             void unvotePost();
@@ -32,10 +30,6 @@ const VoteButtons = ({ score, userVote }: Props) => {
 
     return (
         <div className="flex gap-2 items-center text-xl my-4">
-            <WarningAlert
-                show={showWarning}
-                message="You must be logged in to do that!"
-            />
             <button
                 className="cursor-pointer"
                 onClick={(e) => {

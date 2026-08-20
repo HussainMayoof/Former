@@ -42,6 +42,7 @@ The project requires `.env` files in both the `former-backend` and `former-front
 ### Backend Variables
 
 - `PORT` — the port that the server runs on, its value is `3000` by default if unset
+- `DATABASE_URL` — the URL of the database e.g. `postgresql://postgres:postgres@localhost:5432/former`
 - `JWT_SECRET` — the JSON Web Token secret
 
 ### Frontend Variables
@@ -49,7 +50,7 @@ The project requires `.env` files in both the `former-backend` and `former-front
 - `VITE_API_URL` — the URL to the backend e.g. `http://localhost:3000/api`
 
 ### Shared Variables
-- `DATABASE_URL` — the URL of the database e.g. `postgresql://postgres:postgres@localhost:5432/former`
+- `DATABASE_URL` — the same database URL that the backend uses
 
 ---
 

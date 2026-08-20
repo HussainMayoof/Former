@@ -1,8 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
-import { usePostsActions } from '../store.ts';
+import { useAlertActions, usePostsActions } from '../store.ts';
 import type { MouseEvent, SubmitEvent } from 'react';
-import ErrorAlert from './shared/ErrorAlert.tsx';
 import { BsExclamationCircle } from 'react-icons/bs';
 
 const NewPost = () => {
@@ -12,7 +11,8 @@ const NewPost = () => {
     const [content, setContent] = useState('');
     const [newTag, setNewTag] = useState('');
     const [tags, setTags] = useState<string[]>([]);
-    const [error, setError] = useState('');
+
+    const { setAlert } = useAlertActions();
 
     const navigate = useNavigate();
     const { addPost } = usePostsActions();
@@ -43,8 +43,7 @@ const NewPost = () => {
             navigate(`/posts/${post.id}`, { viewTransition: true });
         } catch (e) {
             if (e instanceof Error) {
-                setError(e.message);
-                setTimeout(() => setError(''), 5000);
+                setAlert('Error', e.message, 5000);
             }
         }
     };
@@ -58,8 +57,6 @@ const NewPost = () => {
                 <h2 className="text-2xl">New Post</h2>
                 <hr className="w-full" />
             </div>
-
-            {error && <ErrorAlert>{error}</ErrorAlert>}
 
             <label className="flex flex-col gap-1">
                 <span>

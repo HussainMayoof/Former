@@ -1,25 +1,24 @@
 import { AnimatePresence, motion } from 'framer-motion';
-import { BsExclamationTriangle } from 'react-icons/bs';
+import { BsExclamationTriangle, BsXCircle } from 'react-icons/bs';
+import { useAlert } from '../store.ts';
 
-interface Props {
-    show: boolean;
-    message: string;
-}
+const Alert = () => {
+    const { show, type, message } = useAlert();
 
-const WarningAlert = ({ show, message }: Props) => {
     return (
         <AnimatePresence>
             {show && (
                 <motion.div
                     role="alert"
-                    className="alert alert-warning fixed bottom-12 left-1/2 z-99 p-4"
+                    className={`alert ${type === 'Error' && 'alert-error'} ${type === 'Warning' && 'alert-warning'} fixed bottom-12 left-1/2 z-99 p-4`}
                     initial={{ y: 50, opacity: 0 }}
                     animate={{ y: 0, opacity: 1 }}
                     exit={{ y: 50, opacity: 0 }}
                     transition={{ duration: 0.3, ease: 'easeOut' }}
                     style={{ x: '-50%' }}
                 >
-                    <BsExclamationTriangle />
+                    {type === 'Error' && <BsXCircle />}
+                    {type === 'Warning' && <BsExclamationTriangle />}
                     <span>{message}</span>
                 </motion.div>
             )}
@@ -27,4 +26,4 @@ const WarningAlert = ({ show, message }: Props) => {
     );
 };
 
-export default WarningAlert;
+export default Alert;

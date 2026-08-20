@@ -8,15 +8,7 @@ const PostsRouter = Router();
 
 //Get all posts
 PostsRouter.get('/', optionalTokenExtractor, async (req: TokenRequest, res) => {
-    const posts = await prisma.post.findMany({
-        include: {
-            user: {
-                select: {
-                    displayName: true,
-                },
-            },
-        },
-    });
+    const posts = await prisma.post.findManyWithUser();
 
     let postsResponse: Post[] = [];
     if (req.token) {
@@ -42,8 +34,6 @@ PostsRouter.get('/', optionalTokenExtractor, async (req: TokenRequest, res) => {
         postsResponse = posts;
     }
 
-    console.log(postsResponse);
-
     res.json(postsResponse);
 });
 
@@ -53,20 +43,8 @@ PostsRouter.get(
     optionalTokenExtractor,
     async (req: TokenRequest, res) => {
         const id = req.params.id as string;
-        const post = await prisma.post.findUnique({
+        const post = await prisma.post.findOneWithUserAndTags({
             where: { id },
-            include: {
-                user: {
-                    select: {
-                        displayName: true,
-                    },
-                },
-                tags: {
-                    select: {
-                        tagName: true,
-                    },
-                },
-            },
         });
 
         if (!post) {
@@ -124,58 +102,22 @@ PostsRouter.post(
         let post;
         try {
             if (!existingVote) {
-                post = await prisma.post.update({
+                post = await prisma.post.updateWithUserAndTags({
                     where: { id: req.params.id },
                     data: {
                         score: upvote ? { increment: 1 } : { decrement: 1 },
                     },
-                    include: {
-                        user: {
-                            select: {
-                                displayName: true,
-                            },
-                        },
-                        tags: {
-                            select: {
-                                tagName: true,
-                            },
-                        },
-                    },
                 });
             } else if (existingVote.upvote !== upvote) {
-                post = await prisma.post.update({
+                post = await prisma.post.updateWithUserAndTags({
                     where: { id: req.params.id },
                     data: {
                         score: upvote ? { increment: 2 } : { decrement: 2 },
                     },
-                    include: {
-                        user: {
-                            select: {
-                                displayName: true,
-                            },
-                        },
-                        tags: {
-                            select: {
-                                tagName: true,
-                            },
-                        },
-                    },
                 });
             } else {
-                post = await prisma.post.findUnique({
+                post = await prisma.post.findOneWithUserAndTags({
                     where: { id: req.params.id },
-                    include: {
-                        user: {
-                            select: {
-                                displayName: true,
-                            },
-                        },
-                        tags: {
-                            select: {
-                                tagName: true,
-                            },
-                        },
-                    },
                 });
             }
         } catch (e) {
@@ -237,40 +179,16 @@ PostsRouter.delete(
         let post;
         try {
             if (!existingVote) {
-                post = await prisma.post.findFirst({
+                post = await prisma.post.findOneWithUserAndTags({
                     where: { id: req.params.id },
-                    include: {
-                        user: {
-                            select: {
-                                displayName: true,
-                            },
-                        },
-                        tags: {
-                            select: {
-                                tagName: true,
-                            },
-                        },
-                    },
                 });
             } else {
-                post = await prisma.post.update({
+                post = await prisma.post.updateWithUserAndTags({
                     where: { id: req.params.id },
                     data: {
                         score: existingVote.upvote
                             ? { decrement: 1 }
                             : { increment: 1 },
-                    },
-                    include: {
-                        user: {
-                            select: {
-                                displayName: true,
-                            },
-                        },
-                        tags: {
-                            select: {
-                                tagName: true,
-                            },
-                        },
                     },
                 });
 

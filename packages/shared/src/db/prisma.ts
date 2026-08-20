@@ -17,7 +17,7 @@ const prisma = new PrismaClient({
 }).$extends({
     model: {
         post: {
-            findManyWithUser: async ({orderBy}: { orderBy: PostOrderByWithRelationInput }) => {
+            $findManyWithUser: async ({orderBy}: { orderBy: PostOrderByWithRelationInput }) => {
                 return await prisma.post.findMany({
                     include: {
                         user: {
@@ -30,7 +30,7 @@ const prisma = new PrismaClient({
                 })
             },
 
-            findOneWithUserAndTags: async ({where}: { where: PostWhereInput }) => {
+            $findOneWithUserAndTags: async ({where}: { where: PostWhereInput }) => {
                 return prisma.post.findFirst({
                     where,
                     include: {
@@ -48,7 +48,7 @@ const prisma = new PrismaClient({
                 })
             },
 
-            updateWithUserAndTags: async ({where, data}: { where: PostWhereUniqueInput, data: PostUpdateInput }) => {
+            $updateWithUserAndTags: async ({where, data}: { where: PostWhereUniqueInput, data: PostUpdateInput }) => {
                 return prisma.post.update({
                     where,
                     data,
@@ -66,16 +66,108 @@ const prisma = new PrismaClient({
                     },
                 })
             }
+        },
+        vote: {
+            $findUnique: async (postId: string, userId: string) => {
+                return prisma.vote.findUnique({
+                    where: {
+                        postId_userId: {postId, userId}
+                    },
+                })
+            }
         }
     },
     query: {
         user: {
-            create({args, query}) {
+            create: ({args, query}) => {
                 args.data = UserCreateInput.parse(args.data);
                 return query(args);
             },
         },
     },
+    client: {
+        $vote: async (postId: string, userId: string, upvote: boolean) => {
+            const existingVote = await prisma.vote.findUnique({
+                where: {postId_userId: {postId, userId}}
+            });
+
+            const vote = await prisma.vote.upsert({
+                where: {postId_userId: {postId, userId}},
+                update: {upvote},
+                create: {postId, userId, upvote},
+            });
+
+            const userVote = vote.upvote;
+
+            let post;
+            if (!existingVote) {
+                const deltaScore = upvote ? 1 : -1;
+
+                post = await prisma.post.$updateWithUserAndTags({
+                    where: {id: postId},
+                    data: {
+                        score: {increment: deltaScore},
+                    },
+                });
+
+                await prisma.user.update({
+                    where: {id: post.userId},
+                    data: {
+                        formits: {increment: deltaScore},
+                    },
+                })
+            } else if (existingVote.upvote !== upvote) {
+                const deltaScore = upvote ? 2 : -2;
+
+                post = await prisma.post.$updateWithUserAndTags({
+                    where: {id: postId},
+                    data: {
+                        score: {increment: deltaScore},
+                    },
+                });
+
+                await prisma.user.update({
+                    where: {id: post.userId},
+                    data: {
+                        formits: {increment: deltaScore},
+                    },
+                })
+            } else {
+                post = await prisma.post.$findOneWithUserAndTags({
+                    where: {id: postId},
+                });
+            }
+
+
+            return {...post, userVote};
+        },
+
+        $unvote: async (postId: string, userId: string) => {
+            const existingVote = await prisma.vote.$findUnique(postId, userId);
+
+            if (!existingVote) {
+                return await prisma.post.$findOneWithUserAndTags({
+                    where: {id: postId},
+                });
+            } else {
+                const deltaScore = existingVote.upvote ? -1 : 1;
+
+                await prisma.vote.delete({where: {postId_userId: {postId, userId},},});
+
+                const post = await prisma.post.$updateWithUserAndTags({
+                    where: {id: postId},
+                    data: {score: {increment: deltaScore}},
+                });
+
+                await prisma.user.update({
+                    where: {id: post.userId},
+                    data: {formits: {increment: deltaScore}},
+                })
+
+                return post;
+            }
+        }
+    }
 });
 
 export default prisma;

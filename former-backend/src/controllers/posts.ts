@@ -8,37 +8,25 @@ const PostsRouter = Router();
 
 //Get all posts
 PostsRouter.get('/', optionalTokenExtractor, async (req: TokenRequest, res) => {
-    const posts = await prisma.post.findManyWithUser({
+    const posts = await prisma.post.$findManyWithUser({
         orderBy: {
             score: 'desc',
         },
     });
 
-    let postsResponse: Post[] = [];
-    if (req.token) {
-        for (const post of posts) {
-            const vote = await prisma.vote.findUnique({
-                where: {
-                    // eslint-disable-next-line camelcase -- Prisma provides this by default
-                    postId_userId: {
-                        postId: post.id,
-                        userId: req.token.id,
-                    },
-                },
-            });
-
-            if (vote) {
-                const userVote = vote.upvote;
-                postsResponse = postsResponse.concat({ ...post, userVote });
-            } else {
-                postsResponse = postsResponse.concat({ ...post });
-            }
-        }
-    } else {
-        postsResponse = posts;
+    if (!req.token) {
+        return res.json(posts);
     }
 
-    res.json(postsResponse);
+    const postsResponse: Post[] = await Promise.all(
+        posts.map(async (post) => {
+            const vote = await prisma.vote.$findUnique(post.id, req.token!.id);
+
+            return vote ? { ...post, userVote: vote.upvote } : { ...post };
+        }),
+    );
+
+    return res.json(postsResponse);
 });
 
 //Get one post
@@ -47,7 +35,7 @@ PostsRouter.get(
     optionalTokenExtractor,
     async (req: TokenRequest, res) => {
         const id = req.params.id as string;
-        const post = await prisma.post.findOneWithUserAndTags({
+        const post = await prisma.post.$findOneWithUserAndTags({
             where: { id },
         });
 
@@ -56,15 +44,7 @@ PostsRouter.get(
         }
 
         if (req.token) {
-            const vote = await prisma.vote.findUnique({
-                where: {
-                    // eslint-disable-next-line camelcase -- Prisma provides this by default
-                    postId_userId: {
-                        postId: id,
-                        userId: req.token.id,
-                    },
-                },
-            });
+            const vote = await prisma.vote.$findUnique(id, req.token.id);
             if (vote) {
                 const userVote = vote.upvote;
                 return res.json({ ...post, userVote });
@@ -93,67 +73,9 @@ PostsRouter.post(
             return res.status(400).json({ error: 'Invalid vote type' });
         }
 
-        const existingVote = await prisma.vote.findUnique({
-            where: {
-                // eslint-disable-next-line camelcase -- Prisma provides this by default
-                postId_userId: {
-                    postId: req.params.id,
-                    userId: req.token.id,
-                },
-            },
-        });
+        const post = await prisma.$vote(req.params.id, req.token.id, upvote);
 
-        let post;
-        try {
-            if (!existingVote) {
-                post = await prisma.post.updateWithUserAndTags({
-                    where: { id: req.params.id },
-                    data: {
-                        score: upvote ? { increment: 1 } : { decrement: 1 },
-                    },
-                });
-            } else if (existingVote.upvote !== upvote) {
-                post = await prisma.post.updateWithUserAndTags({
-                    where: { id: req.params.id },
-                    data: {
-                        score: upvote ? { increment: 2 } : { decrement: 2 },
-                    },
-                });
-            } else {
-                post = await prisma.post.findOneWithUserAndTags({
-                    where: { id: req.params.id },
-                });
-            }
-        } catch (e) {
-            if (e instanceof Prisma.PrismaClientKnownRequestError) {
-                if (e.code === 'P2025') {
-                    return res.status(404).json({ error: 'Post not found' });
-                }
-            }
-            return res.status(500).json({ error: 'Internal server error' });
-        }
-
-        const vote = await prisma.vote.upsert({
-            where: {
-                // eslint-disable-next-line camelcase -- Prisma provides this by default
-                postId_userId: {
-                    postId: req.params.id,
-                    userId: req.token.id,
-                },
-            },
-            update: {
-                upvote,
-            },
-            create: {
-                postId: req.params.id,
-                userId: req.token.id,
-                upvote,
-            },
-        });
-
-        const userVote = vote.upvote;
-
-        return res.json({ ...post, userVote });
+        return res.json(post);
     },
 );
 
@@ -170,42 +92,9 @@ PostsRouter.delete(
             return res.status(400).json({ error: 'Post ID is required' });
         }
 
-        const existingVote = await prisma.vote.findUnique({
-            where: {
-                // eslint-disable-next-line camelcase -- Prisma provides this by default
-                postId_userId: {
-                    postId: req.params.id,
-                    userId: req.token.id,
-                },
-            },
-        });
-
-        let post;
         try {
-            if (!existingVote) {
-                post = await prisma.post.findOneWithUserAndTags({
-                    where: { id: req.params.id },
-                });
-            } else {
-                post = await prisma.post.updateWithUserAndTags({
-                    where: { id: req.params.id },
-                    data: {
-                        score: existingVote.upvote
-                            ? { decrement: 1 }
-                            : { increment: 1 },
-                    },
-                });
-
-                await prisma.vote.delete({
-                    where: {
-                        // eslint-disable-next-line camelcase -- Prisma provides this by default
-                        postId_userId: {
-                            postId: req.params.id,
-                            userId: req.token.id,
-                        },
-                    },
-                });
-            }
+            const post = await prisma.$unvote(req.params.id, req.token.id);
+            return res.json(post);
         } catch (e) {
             if (e instanceof Prisma.PrismaClientKnownRequestError) {
                 if (e.code === 'P2025') {
@@ -214,8 +103,6 @@ PostsRouter.delete(
             }
             return res.status(500).json({ error: 'Internal server error' });
         }
-
-        return res.json(post);
     },
 );
 

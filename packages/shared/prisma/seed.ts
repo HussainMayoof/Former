@@ -127,6 +127,11 @@ const seedVotes = async (users: Awaited<ReturnType<typeof seedUsers>>, posts: Aw
             where: {id: post.id},
             data: {score: scoreDelta},
         });
+
+        await prisma.user.update({
+            where: {id: post.userId},
+            data: {formits: {increment: scoreDelta}}
+        })
     }
 }
 

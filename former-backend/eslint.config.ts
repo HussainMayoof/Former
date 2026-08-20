@@ -24,6 +24,7 @@ export default defineConfig([
             'new-cap': 'off',
             'func-style': 'off',
             'unicorn/prefer-string-slice': 'off',
+            'no-undefined': 'off',
         },
     },
 ]);

@@ -2,8 +2,9 @@ import { JWT_SECRET } from './config.js';
 import jwt from 'jsonwebtoken';
 import type { NextFunction, Response } from 'express';
 import type { TokenRequest } from '../types.js';
+import { prisma } from '@former/shared/db';
 
-export const tokenExtractor = (
+export const tokenExtractor = async (
     req: TokenRequest,
     res: Response,
     next: NextFunction,
@@ -26,14 +27,23 @@ export const tokenExtractor = (
         return res.status(401).json({ error: 'Invalid token' });
     }
 
+    const user = await prisma.user.findUnique({
+        where: { id: decodedToken.id },
+        select: { id: true },
+    });
+
+    if (!user) {
+        return res.status(401).json({ error: 'User not found' });
+    }
+
     req.token = decodedToken;
 
     return next();
 };
 
-export const optionalTokenExtractor = (
+export const optionalTokenExtractor = async (
     req: TokenRequest,
-    _res: Response,
+    res: Response,
     next: NextFunction,
 ) => {
     const authorization = req.headers.authorization;
@@ -52,6 +62,15 @@ export const optionalTokenExtractor = (
 
     if (typeof decodedToken === 'string') {
         return next();
+    }
+
+    const user = await prisma.user.findUnique({
+        where: { id: decodedToken.id },
+        select: { id: true },
+    });
+
+    if (!user) {
+        return res.status(401).json({ error: 'User not found' });
     }
 
     req.token = decodedToken;

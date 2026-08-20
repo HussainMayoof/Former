@@ -9,7 +9,8 @@
     "scripts": {
         "build": "npm run build -w former-$BUILD_TARGET",
         "start": "npm run start -w former-$BUILD_TARGET",
-        "dev": "npm run dev -w former-backend && npm run dev -w former-frontend"
+        "dev": "npm run dev -w former-backend && npm run dev -w former-frontend",
+        "seed": "npm run seed -w packages/shared"
     },
     "allowScripts": {
         "@prisma/engines@7.9.1": true,

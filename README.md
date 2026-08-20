@@ -37,7 +37,7 @@ Docker using Docker Compose during development, and deployed directly to &ensp;<
 
 ## Environment Variables
 
-The project requires `.env` files in both the `former-backend` and `former-frontend` directories
+The project requires `.env` files in the roots of the `former-backend`, `former-frontend`, and `packages/shared` directories
 
 ### Backend Variables
 
@@ -62,10 +62,11 @@ The project requires `.env` files in both the `former-backend` and `former-front
 >2. [Docker Desktop](https://www.docker.com/products/docker-desktop/)
 
 - At the project root, run `docker compose -f docker-compose.dev.yml up` to start up the Database in docker
-- Run `npm i` in the root directory to install dependencies
+- Run `npm install` in the root directory to install dependencies
 - Run `npm run dev` in both the `former-backend` and `former-frontend` directories to start the dev backend and frontend
   servers
 - The project will be available on http://localhost:5173/
+- (Optional) to seed data, run `npm run seed` in the root directory
 
 ---
 

@@ -14,7 +14,8 @@
     },
     "scripts": {
         "postinstall": "prisma generate --schema=./prisma/schema.prisma && npm run build",
-        "build": "tsc --build"
+        "build": "tsc --build",
+        "seed": "prisma db seed"
     },
     "dependencies": {
         "@prisma/client": "^7.9.1",
@@ -22,6 +23,8 @@
         "zod": "^4.4.3"
     },
     "devDependencies": {
-        "@types/node": "^25.9.5"
+        "@faker-js/faker": "^10.6.0",
+        "@types/node": "^25.9.5",
+        "dotenv": "^17.4.2"
     }
 }

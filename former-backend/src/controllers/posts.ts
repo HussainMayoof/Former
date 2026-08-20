@@ -8,7 +8,11 @@ const PostsRouter = Router();
 
 //Get all posts
 PostsRouter.get('/', optionalTokenExtractor, async (req: TokenRequest, res) => {
-    const posts = await prisma.post.findManyWithUser();
+    const posts = await prisma.post.findManyWithUser({
+        orderBy: {
+            score: 'desc',
+        },
+    });
 
     let postsResponse: Post[] = [];
     if (req.token) {

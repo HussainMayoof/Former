@@ -3,6 +3,7 @@ import {DATABASE_URL} from '../util/config.js';
 import {PrismaClient} from '../generated/prisma/client.js';
 import {UserCreateInput} from './index.js';
 import {
+    PostOrderByWithRelationInput,
     PostUpdateInput,
     PostWhereInput,
     PostWhereUniqueInput
@@ -16,7 +17,7 @@ const prisma = new PrismaClient({
 }).$extends({
     model: {
         post: {
-            findManyWithUser: async ()=>  {
+            findManyWithUser: async ({orderBy}: { orderBy: PostOrderByWithRelationInput }) => {
                 return await prisma.post.findMany({
                     include: {
                         user: {
@@ -25,6 +26,7 @@ const prisma = new PrismaClient({
                             },
                         },
                     },
+                    orderBy
                 })
             },
 

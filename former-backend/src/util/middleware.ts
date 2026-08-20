@@ -11,7 +11,9 @@ export const tokenExtractor = async (
 ) => {
     const authorization = req.headers.authorization;
     if (!authorization || !authorization.startsWith('Bearer ')) {
-        return res.status(401).json({ error: 'Unauthorized' });
+        return res
+            .status(401)
+            .json({ error: 'Unauthorized', code: 'USER_NOT_FOUND' });
     }
 
     const token = authorization.substring(7);
@@ -20,11 +22,15 @@ export const tokenExtractor = async (
     try {
         decodedToken = jwt.verify(token, JWT_SECRET);
     } catch {
-        return res.status(401).json({ error: 'Invalid token' });
+        return res
+            .status(401)
+            .json({ error: 'Invalid token', code: 'USER_NOT_FOUND' });
     }
 
     if (typeof decodedToken === 'string') {
-        return res.status(401).json({ error: 'Invalid token' });
+        return res
+            .status(401)
+            .json({ error: 'Invalid token', code: 'USER_NOT_FOUND' });
     }
 
     const user = await prisma.user.findUnique({
@@ -33,7 +39,9 @@ export const tokenExtractor = async (
     });
 
     if (!user) {
-        return res.status(401).json({ error: 'User not found' });
+        return res
+            .status(401)
+            .json({ error: 'User not found', code: 'USER_NOT_FOUND' });
     }
 
     req.token = decodedToken;
@@ -70,7 +78,9 @@ export const optionalTokenExtractor = async (
     });
 
     if (!user) {
-        return res.status(401).json({ error: 'User not found' });
+        return res
+            .status(401)
+            .json({ error: 'User not found', code: 'USER_NOT_FOUND' });
     }
 
     req.token = decodedToken;

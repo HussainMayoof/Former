@@ -1,36 +1,5 @@
 import type { NewPost, Post, SinglePost } from '../types';
-import { useUserStore } from '../store.ts';
-
-const apiURL = import.meta.env.VITE_API_URL;
-
-const authorisedRequest = async (
-    url: string,
-    method: 'GET' | 'POST' | 'DELETE',
-    allowUnauthorised: boolean = false,
-    body?: object,
-) => {
-    const token = useUserStore.getState().user?.token;
-
-    if (!token) {
-        if (allowUnauthorised) {
-            return await fetch(`${apiURL}/${url}`, {
-                method,
-                body: body ? JSON.stringify(body) : undefined,
-            });
-        } else {
-            throw new Error('Unauthorised');
-        }
-    }
-
-    return await fetch(`${apiURL}/${url}`, {
-        method,
-        headers: {
-            Authorization: `Bearer ${token}`,
-            'Content-Type': 'application/json',
-        },
-        body: body ? JSON.stringify(body) : undefined,
-    });
-};
+import { authorisedRequest } from '../util/helpers.ts';
 
 export const getAllPosts = async () => {
     const response = await authorisedRequest('posts', 'GET', true);

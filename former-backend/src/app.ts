@@ -4,6 +4,7 @@ import LoginRouter from './controllers/login.js';
 import PostsRouter from './controllers/posts.js';
 import cors from 'cors';
 import { FRONTEND_URL } from './util/config.js';
+import CommentsRouter from './controllers/comments.js';
 
 const app = express();
 app.use(express.json());
@@ -21,5 +22,6 @@ app.get('/ping', (_req, res) => {
 app.use('/api/users', UserRouter);
 app.use('/api/login', LoginRouter);
 app.use('/api/posts', PostsRouter);
+app.use('/api/comments', CommentsRouter);
 
 export default app;

@@ -21,3 +21,15 @@ export type PostWithUser = Prisma.PostGetPayload<{
 export interface Post extends PostWithUser {
     userVote?: boolean;
 }
+
+export type CommentWithChildren = Prisma.CommentGetPayload<{
+    include: {
+        user: {
+            select: {
+                displayName: true;
+            };
+        };
+    };
+}> & {
+    childComments: CommentWithChildren[];
+};

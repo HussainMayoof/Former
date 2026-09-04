@@ -1,12 +1,20 @@
 import { Link } from 'react-router';
-import type { SinglePost } from '../../types.ts';
+import type { CommentWithChildren, SinglePost } from '../../types.ts';
 import VoteButtons from './VoteButtons.tsx';
+import CommentItem from './CommentItem.tsx';
+import CommentForm from '../CommentForm.tsx';
+import { useState } from 'react';
+import { BsChat } from 'react-icons/bs';
 
 interface Props {
     post: SinglePost;
+    comments: CommentWithChildren[];
+    newComment: (comment: CommentWithChildren) => void;
 }
 
-const PostItem = ({ post }: Props) => {
+const PostItem = ({ post, comments, newComment }: Props) => {
+    const [showCommentForm, setShowCommentForm] = useState(false);
+
     return (
         <div className="p-12 m-6 border-2 rounded-4xl flex-1">
             <p className="font-semibold text-lg">{post.title}</p>
@@ -54,7 +62,35 @@ const PostItem = ({ post }: Props) => {
 
             <hr className="text-tertiary-content opacity-25" />
 
-            <VoteButtons score={post.score} userVote={post.userVote} />
+            <div className="flex justify-between items-center">
+                <VoteButtons score={post.score} userVote={post.userVote} />
+
+                <div
+                    onClick={() => setShowCommentForm(!showCommentForm)}
+                    className="flex items-center gap-2 cursor-pointer group tooltip"
+                    data-tip="New Comment"
+                >
+                    <p className="group-hover:text-info duration-200">
+                        {comments.length}
+                    </p>
+                    <BsChat className="-scale-x-100 group-hover:fill-info duration-200" />
+                </div>
+            </div>
+
+            <CommentForm
+                postId={post.id}
+                newComment={newComment}
+                shown={showCommentForm}
+                setShown={setShowCommentForm}
+            />
+
+            {comments.map((comment) => (
+                <CommentItem
+                    key={comment.id}
+                    comment={comment}
+                    newComment={newComment}
+                />
+            ))}
         </div>
     );
 };

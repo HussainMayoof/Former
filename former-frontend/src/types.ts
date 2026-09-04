@@ -36,6 +36,18 @@ export interface SinglePost extends PostWithUserAndTags {
 
 export type NewPost = PostCreateInputType;
 
+export type CommentWithChildren = Prisma.CommentGetPayload<{
+    include: {
+        user: {
+            select: {
+                displayName: true;
+            };
+        };
+    };
+}> & {
+    childComments: CommentWithChildren[];
+};
+
 export interface AuthenticatedUser {
     username: string;
     token: string;

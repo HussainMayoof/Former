@@ -89,6 +89,9 @@ const prisma = new PrismaClient({
                                     },
                                 },
                             },
+                            orderBy: {
+                                createdAt: 'asc',
+                            },
                         },
                     },
                 });
@@ -102,7 +105,6 @@ const prisma = new PrismaClient({
                 postComments.forEach((comment) => {
                     commentMap.set(comment.id, {...comment, childComments: []});
                 });
-
                 const comments: any[] = [];
 
                 postComments.forEach((comment) => {

@@ -16,6 +16,33 @@ const Post = () => {
         undefined,
     );
 
+    const addChildComment = (
+        comment: CommentWithChildren,
+        newComment: CommentWithChildren,
+    ): CommentWithChildren => {
+        if (comment.id === newComment.parentCommentId) {
+            return {
+                ...comment,
+                childComments: comment.childComments.concat(newComment),
+            };
+        }
+
+        return {
+            ...comment,
+            childComments: comment.childComments.map((child) =>
+                addChildComment(child, newComment),
+            ),
+        };
+    };
+
+    const newComment = (comment: CommentWithChildren) => {
+        if (comment.parentCommentId && comments) {
+            setComments(comments.map((item) => addChildComment(item, comment)));
+        } else {
+            setComments(comments ? comments.concat(comment) : [comment]);
+        }
+    };
+
     useEffect(() => {
         if (!id) return;
         void getPost(id);
@@ -40,7 +67,7 @@ const Post = () => {
 
     if (loading || !post || !comments) return <PostSkeleton />;
 
-    return <PostItem post={post} comments={comments} />;
+    return <PostItem post={post} comments={comments} newComment={newComment} />;
 };
 
 export default Post;

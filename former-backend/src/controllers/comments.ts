@@ -49,9 +49,16 @@ CommentsRouter.post(
                 userId,
                 content: req.body.content,
             },
+            include: {
+                user: {
+                    select: {
+                        displayName: true,
+                    },
+                },
+            },
         });
 
-        return res.json(newComment);
+        return res.json({ ...newComment, childComments: [] });
     },
 );
 
@@ -107,9 +114,16 @@ CommentsRouter.post(
                 parentCommentId,
                 content: req.body.content,
             },
+            include: {
+                user: {
+                    select: {
+                        displayName: true,
+                    },
+                },
+            },
         });
 
-        return res.json(newComment);
+        return res.json({ ...newComment, childComments: [] });
     },
 );
 

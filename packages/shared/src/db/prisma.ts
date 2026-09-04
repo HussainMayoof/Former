@@ -75,6 +75,50 @@ const prisma = new PrismaClient({
                     },
                 })
             }
+        },
+        comment: {
+            $findMany: async (postId: string) => {
+                const post = await prisma.post.findUnique({
+                    where: {id: postId},
+                    select: {
+                        comments: {
+                            include: {
+                                user: {
+                                    select: {
+                                        displayName: true,
+                                    },
+                                },
+                            },
+                        },
+                    },
+                });
+
+                if (!post) {
+                    return null;
+                }
+
+                const postComments = post.comments;
+                const commentMap = new Map();
+                postComments.forEach((comment) => {
+                    commentMap.set(comment.id, {...comment, childComments: []});
+                });
+
+                const comments: any[] = [];
+
+                postComments.forEach((comment) => {
+                    const data = commentMap.get(comment.id)!;
+                    if (!comment.parentCommentId) {
+                        comments.push(data);
+                    } else {
+                        const parent = commentMap.get(comment.parentCommentId);
+                        if (parent) {
+                            parent.childComments.push(data);
+                        }
+                    }
+                });
+
+                return comments;
+            }
         }
     },
     query: {

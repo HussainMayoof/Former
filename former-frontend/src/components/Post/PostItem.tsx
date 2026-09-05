@@ -5,6 +5,7 @@ import CommentItem from './CommentItem.tsx';
 import CommentForm from '../CommentForm.tsx';
 import { useState } from 'react';
 import { BsChat } from 'react-icons/bs';
+import { useAlertActions, useUser } from '../../store.ts';
 
 interface Props {
     post: SinglePost;
@@ -13,7 +14,21 @@ interface Props {
 }
 
 const PostItem = ({ post, comments, newComment }: Props) => {
+    const user = useUser();
+    const { setAlert } = useAlertActions();
+
     const [showCommentForm, setShowCommentForm] = useState(false);
+
+    const handleClickComment = () => {
+        if (user) {
+            setShowCommentForm(!showCommentForm);
+        } else {
+            if (!showCommentForm) {
+                setAlert('Warning', 'You must be logged in to do that!');
+            }
+            setShowCommentForm(false);
+        }
+    };
 
     return (
         <div className="p-12 m-6 border-2 rounded-4xl flex-1">
@@ -66,7 +81,7 @@ const PostItem = ({ post, comments, newComment }: Props) => {
                 <VoteButtons score={post.score} userVote={post.userVote} />
 
                 <div
-                    onClick={() => setShowCommentForm(!showCommentForm)}
+                    onClick={handleClickComment}
                     className="flex items-center gap-2 cursor-pointer group tooltip"
                     data-tip="New Comment"
                 >

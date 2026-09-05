@@ -3,6 +3,7 @@ import { useState } from 'react';
 import UnderlinedLink from '../shared/UnderlinedLink.tsx';
 import CommentForm from '../CommentForm.tsx';
 import { BsReply } from 'react-icons/bs';
+import { useAlertActions, useUser } from '../../store.ts';
 
 type Props = {
     comment: CommentWithChildren;
@@ -10,8 +11,22 @@ type Props = {
 };
 
 const CommentItem = ({ comment, newComment }: Props) => {
+    const user = useUser();
+    const { setAlert } = useAlertActions();
+
     const [collapsed, setCollapsed] = useState(false);
     const [showCommentForm, setShowCommentForm] = useState(false);
+
+    const handleClickReply = () => {
+        if (user) {
+            setShowCommentForm(!showCommentForm);
+        } else {
+            if (!showCommentForm) {
+                setAlert('Warning', 'You must be logged in to do that!');
+            }
+            setShowCommentForm(false);
+        }
+    };
 
     if (collapsed)
         return (
@@ -58,7 +73,7 @@ const CommentItem = ({ comment, newComment }: Props) => {
                     </div>
 
                     <div
-                        onClick={() => setShowCommentForm(!showCommentForm)}
+                        onClick={handleClickReply}
                         className="flex items-center gap-2 cursor-pointer group self-baseline tooltip"
                         data-tip="Reply"
                     >

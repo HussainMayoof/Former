@@ -1,10 +1,12 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
-import { useAlertActions, usePostsActions } from '../store.ts';
+import { useAlertActions, usePostsActions, useUser } from '../store.ts';
 import type { MouseEvent, SubmitEvent } from 'react';
 import { BsExclamationCircle } from 'react-icons/bs';
 
 const NewPost = () => {
+    const user = useUser();
+
     const [title, setTitle] = useState('');
     const [titleError, setTitleError] = useState(false);
 
@@ -20,6 +22,12 @@ const NewPost = () => {
     useEffect(() => {
         document.title = 'Former - New Post';
     }, []);
+
+    useEffect(() => {
+        if (!user) {
+            navigate('/');
+        }
+    }, [user, navigate]);
 
     const handleCreateNewTag = (e: MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();

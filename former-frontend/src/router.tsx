@@ -6,6 +6,7 @@ import NewPost from './components/NewPost.tsx';
 import Post from './components/Post/index.tsx';
 import Login from './components/Login.tsx';
 import Register from './components/Register.tsx';
+import Search from './components/Search.tsx';
 
 const router = createBrowserRouter([
     {
@@ -13,6 +14,8 @@ const router = createBrowserRouter([
         element: <Layout />,
         children: [
             { index: true, element: <Posts /> },
+            { path: 'search', element: <Search /> },
+            { path: 'search/:search', element: <Search /> },
             { path: 'users', element: <Users /> },
             { path: 'posts/new', element: <NewPost /> },
             { path: 'posts/:id', element: <Post /> },

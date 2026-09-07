@@ -17,7 +17,10 @@ const prisma = new PrismaClient({
 }).$extends({
     model: {
         post: {
-            $findManyWithUser: async ({orderBy}: { orderBy: PostOrderByWithRelationInput }) => {
+            $findManyWithUser: async ({where, orderBy}: {
+                where?: PostWhereInput,
+                orderBy: PostOrderByWithRelationInput
+            }) => {
                 return await prisma.post.findMany({
                     include: {
                         user: {
@@ -26,6 +29,7 @@ const prisma = new PrismaClient({
                             },
                         },
                     },
+                    where,
                     orderBy
                 })
             },

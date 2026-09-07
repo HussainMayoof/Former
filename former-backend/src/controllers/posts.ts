@@ -6,7 +6,7 @@ import { PostCreateInput, PostParams } from '@former/shared/schemas';
 
 const PostsRouter = Router();
 
-//Get all posts
+// Get all posts
 PostsRouter.get('/', optionalTokenExtractor, async (req: TokenRequest, res) => {
     const posts = await prisma.post.$findManyWithUser({
         orderBy: {
@@ -29,7 +29,7 @@ PostsRouter.get('/', optionalTokenExtractor, async (req: TokenRequest, res) => {
     return res.json(postsResponse);
 });
 
-//Get one post
+// Get one post
 PostsRouter.get(
     '/:id',
     optionalTokenExtractor,
@@ -52,6 +52,56 @@ PostsRouter.get(
         }
 
         return res.json(post);
+    },
+);
+
+// Search for a post
+PostsRouter.get(
+    '/search/:query',
+    optionalTokenExtractor,
+    async (req: TokenRequest, res) => {
+        const searchQuery = req.params.query as string;
+
+        const posts = await prisma.post.$findManyWithUser({
+            where: {
+                OR: [
+                    {
+                        title: {
+                            search: searchQuery,
+                        },
+                    },
+                    {
+                        content: {
+                            search: searchQuery,
+                        },
+                    },
+                ],
+            },
+            orderBy: {
+                _relevance: {
+                    fields: ['title', 'content'],
+                    search: searchQuery,
+                    sort: 'asc',
+                },
+            },
+        });
+
+        if (!req.token) {
+            return res.json(posts);
+        }
+
+        const postsResponse: Post[] = await Promise.all(
+            posts.map(async (post) => {
+                const vote = await prisma.vote.$findUnique(
+                    post.id,
+                    req.token!.id,
+                );
+
+                return vote ? { ...post, userVote: vote.upvote } : { ...post };
+            }),
+        );
+
+        return res.json(postsResponse);
     },
 );
 
@@ -106,7 +156,7 @@ PostsRouter.delete(
     },
 );
 
-//Create a new post
+// Create a new post
 PostsRouter.post('/', tokenExtractor, async (req: TokenRequest, res) => {
     const body = PostParams.parse(req.body);
     if (!req.token) {

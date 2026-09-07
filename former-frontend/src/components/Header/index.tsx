@@ -1,8 +1,8 @@
-import { Link } from 'react-router';
+import { Link, NavLink } from 'react-router';
 import UnderlinedLink from '../shared/UnderlinedLink.tsx';
 import { useUser, useUserActions } from '../../store.ts';
 import ThemeToggle from './ThemeToggle.tsx';
-import { BsBoxArrowRight } from 'react-icons/bs';
+import { BsBoxArrowRight, BsSearch } from 'react-icons/bs';
 
 const Header = () => {
     const user = useUser();
@@ -10,7 +10,11 @@ const Header = () => {
 
     return (
         <nav className="grid grid-cols-3 items-center px-4">
-            <div />
+            <div>
+                <NavLink to="/search" viewTransition>
+                    <BsSearch />
+                </NavLink>
+            </div>
 
             <h1 className="text-2xl font-semibold text-center">
                 <Link to="/" viewTransition>

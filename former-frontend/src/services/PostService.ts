@@ -13,6 +13,16 @@ export const getPost = async (id: string) => {
     return post;
 };
 
+export const searchPost = async (query: string) => {
+    const response = await authorisedRequest(
+        `posts/search/${query}`,
+        'GET',
+        true,
+    );
+    const posts: Post[] = await response.json();
+    return posts;
+};
+
 export const createPost = async (post: NewPost) => {
     const response = await authorisedRequest('posts', 'POST', false, post);
 

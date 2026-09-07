@@ -83,10 +83,7 @@ The project requires `.env` files in the roots of the `former-backend`, `former-
 
 ## To Do List
 
-- [ ] Show comments on posts
-- [ ] Allow comment creation
 - [ ] Add a profile page
-- [ ] Add a search bar
 - [ ] Add sorting and advanced search
 - [ ] Add post and comment editing and deletion
 - [ ] Add user profile editing and deletion

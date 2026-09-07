@@ -1,10 +1,12 @@
 import { BsSearch } from 'react-icons/bs';
-import { useNavigate } from 'react-router';
 import { type SubmitEvent, useState } from 'react';
+import { useNavigate, useParams } from 'react-router';
 
-const Search = () => {
-    const [search, setSearch] = useState('');
+const SearchBar = () => {
+    const { query } = useParams();
     const navigate = useNavigate();
+
+    const [search, setSearch] = useState(query || '');
 
     const handleSearch = (e: SubmitEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -13,7 +15,7 @@ const Search = () => {
 
     return (
         <form className="flex items-center" onSubmit={handleSearch}>
-            <label className="input m-8 w-full">
+            <label className="input m-8 w-full h-14">
                 <button type="submit" className="cursor-pointer">
                     <BsSearch />
                 </button>
@@ -29,4 +31,4 @@ const Search = () => {
     );
 };
 
-export default Search;
+export default SearchBar;

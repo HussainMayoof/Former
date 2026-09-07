@@ -1,7 +1,6 @@
 import { useEffect } from 'react';
-import PostCard from './PostCard.tsx';
 import { usePosts, usePostsActions } from '../../store.ts';
-import PostCardSkeleton from './PostCardSkeleton.tsx';
+import PostsBody from './PostsBody.tsx';
 
 const Posts = () => {
     const { posts, loading } = usePosts();
@@ -15,26 +14,7 @@ const Posts = () => {
         document.title = 'Former';
     }, []);
 
-    if (loading || !posts) {
-        return (
-            <div className="flex flex-col gap-2 items-center mt-4">
-                <PostCardSkeleton />
-                <PostCardSkeleton />
-                <PostCardSkeleton />
-                <PostCardSkeleton />
-            </div>
-        );
-    }
-
-    return (
-        <div>
-            <div className="flex flex-col items-center mt-4">
-                {posts.map((post) => (
-                    <PostCard key={post.id} post={post} />
-                ))}
-            </div>
-        </div>
-    );
+    return <PostsBody posts={posts} loading={loading} />;
 };
 
 export default Posts;

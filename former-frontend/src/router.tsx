@@ -6,7 +6,7 @@ import NewPost from './components/NewPost.tsx';
 import Post from './components/Post/index.tsx';
 import Login from './components/Login.tsx';
 import Register from './components/Register.tsx';
-import Search from './components/Search.tsx';
+import Search from './components/Search';
 
 const router = createBrowserRouter([
     {

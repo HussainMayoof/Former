@@ -25,16 +25,16 @@ UserRouter.get('/', async (_req, res) => {
 });
 
 // Get one user
-UserRouter.get('/:id', async (req, res) => {
-    const id = req.params.id;
+UserRouter.get('/:username', async (req, res) => {
+    const username = req.params.username;
 
-    if (!id) {
-        return res.status(400).json({ error: 'Invalid user id' });
+    if (!username) {
+        return res.status(400).json({ error: 'Invalid username' });
     }
 
     const user = await prisma.user.findUnique({
         where: {
-            id,
+            username,
         },
         include: {
             posts: true,

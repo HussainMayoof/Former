@@ -10,7 +10,7 @@ const Header = () => {
 
     return (
         <nav className="grid grid-cols-3 items-center px-4">
-            <div>
+            <div className="w-min">
                 <NavLink to="/search" viewTransition>
                     <BsSearch />
                 </NavLink>

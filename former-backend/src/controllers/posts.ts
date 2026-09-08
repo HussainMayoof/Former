@@ -183,6 +183,7 @@ PostsRouter.post('/', tokenExtractor, async (req: TokenRequest, res) => {
             user: {
                 select: {
                     displayName: true,
+                    username: true,
                 },
             },
         },

@@ -6,6 +6,7 @@ export type PostWithUser = Prisma.PostGetPayload<{
         user: {
             select: {
                 displayName: true;
+                username: true;
             };
         };
     };
@@ -16,6 +17,7 @@ export type PostWithUserAndTags = Prisma.PostGetPayload<{
         user: {
             select: {
                 displayName: true;
+                username: true;
             };
         };
         tags: {
@@ -52,6 +54,16 @@ export interface AuthenticatedUser {
     username: string;
     token: string;
 }
+
+export type User = Prisma.UserGetPayload<{
+    include: {
+        posts: true;
+        comments: true;
+    };
+    omit: {
+        passwordHash: true;
+    };
+}>;
 
 export interface UserState {
     user?: AuthenticatedUser;

@@ -13,6 +13,7 @@ export type PostWithUser = Prisma.PostGetPayload<{
         user: {
             select: {
                 displayName: true;
+                username: true;
             };
         };
     };
@@ -27,6 +28,7 @@ export type CommentWithChildren = Prisma.CommentGetPayload<{
         user: {
             select: {
                 displayName: true;
+                username: true;
             };
         };
     };

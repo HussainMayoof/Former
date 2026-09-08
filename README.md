@@ -84,6 +84,7 @@ The project requires `.env` files in the roots of the `former-backend`, `former-
 ## To Do List
 
 - [ ] Add a profile page
+- [ ] Add profile pictures
 - [ ] Add sorting and advanced search
 - [ ] Add post and comment editing and deletion
 - [ ] Add user profile editing and deletion

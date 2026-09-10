@@ -1,12 +1,12 @@
-import type { User } from '../../types';
+import type { UserType } from '../../types';
 import { useUser } from '../../store.ts';
 import ChangeDisplayName from './ChangeDisplayName.tsx';
 import type { Dispatch, SetStateAction } from 'react';
 import ChangePassword from './ChangePassword.tsx';
 
 type Props = {
-    user: User;
-    setUser: Dispatch<SetStateAction<User | null>>;
+    user: UserType;
+    setUser: Dispatch<SetStateAction<UserType | null>>;
 };
 
 const UserInfo = ({ user, setUser }: Props) => {

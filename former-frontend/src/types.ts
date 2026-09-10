@@ -55,7 +55,7 @@ export interface AuthenticatedUser {
     token: string;
 }
 
-export type User = Prisma.UserGetPayload<{
+export type UserType = Prisma.UserGetPayload<{
     include: {
         posts: true;
         comments: {

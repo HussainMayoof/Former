@@ -1,10 +1,10 @@
-import type { User } from '../../types.ts';
+import type { UserType } from '../../types.ts';
 import UnderlinedLink from '../shared/UnderlinedLink.tsx';
 import { useNavigate } from 'react-router';
 import type { MouseEvent } from 'react';
 
 type Props = {
-    user: User;
+    user: UserType;
 };
 
 const Comments = ({ user }: Props) => {

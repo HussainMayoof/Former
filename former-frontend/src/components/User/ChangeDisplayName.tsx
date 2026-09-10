@@ -5,12 +5,12 @@ import {
     useRef,
     useState,
 } from 'react';
-import type { User } from '../../types';
+import type { UserType } from '../../types';
 import { changeDisplayName } from '../../services/UserService.ts';
 import { useAlertActions } from '../../store.ts';
 
 type Props = {
-    setUser: Dispatch<SetStateAction<User | null>>;
+    setUser: Dispatch<SetStateAction<UserType | null>>;
 };
 
 const ChangeDisplayName = ({ setUser }: Props) => {

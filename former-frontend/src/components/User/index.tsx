@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import type { User } from '../../types';
+import type { UserType } from '../../types';
 import { useParams } from 'react-router';
 import { getUser } from '../../services/UserService.ts';
 import PostsBody from '../Posts/PostsBody.tsx';
@@ -7,7 +7,7 @@ import Comments from './Comments.tsx';
 import UserInfo from './UserInfo.tsx';
 
 const User = () => {
-    const [user, setUser] = useState<User | null>(null);
+    const [user, setUser] = useState<UserType | null>(null);
     const { username } = useParams();
 
     useEffect(() => {

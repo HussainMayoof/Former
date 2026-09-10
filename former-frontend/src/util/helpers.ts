@@ -5,7 +5,7 @@ const apiURL = import.meta.env.VITE_API_URL;
 
 export const authorisedRequest = async (
     url: string,
-    method: 'GET' | 'POST' | 'DELETE',
+    method: 'GET' | 'PATCH' | 'POST' | 'DELETE',
     allowUnauthorised: boolean = false,
     body?: object,
 ) => {
@@ -43,6 +43,9 @@ export const authorisedRequest = async (
                 'Authentication error, logged out, please refresh',
                 5000,
             );
+        }
+        if (code === 'INCORRECT_PASSWORD') {
+            setAlert('Error', 'Incorrect Password', 5000);
         }
     }
 

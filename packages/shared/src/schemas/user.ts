@@ -23,3 +23,12 @@ export const UserLoginParams = z.object({
 });
 
 export type UserLoginParamsType = z.infer<typeof UserLoginParams>;
+
+export const UserChangePasswordParams = UserCreateParams.omit({username: true,}).extend({
+    passwordConfirmation: z.string(),
+    oldPassword: z.string().min(1, "Old password is required"),
+}).refine((data) => data.password === data.passwordConfirmation, {
+    message: "Passwords do not match",
+    path: ["passwordConfirmation"],
+});
+export type UserChangePasswordParamsType = z.infer<typeof UserChangePasswordParams>;

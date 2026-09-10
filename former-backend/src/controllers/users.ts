@@ -120,7 +120,15 @@ UserRouter.patch(
                 data: { displayName },
                 include: {
                     posts: true,
-                    comments: true,
+                    comments: {
+                        include: {
+                            post: {
+                                select: {
+                                    title: true,
+                                },
+                            },
+                        },
+                    },
                 },
                 omit: {
                     passwordHash: true,
@@ -147,10 +155,20 @@ UserRouter.patch(
         }
 
         const id = req.token.id;
+        const { oldPassword } = req.body;
         const { password } = UserCreateParams.pick({ password: true }).parse(
             req.body,
         );
         const passwordHash = await bcrypt.hash(password, 12);
+
+        const user = await prisma.user.findUnique({ where: { id } });
+
+        if (!user || !(await bcrypt.compare(oldPassword, user.passwordHash))) {
+            return res.status(401).json({
+                error: 'Incorrect password',
+                code: 'INCORRECT_PASSWORD',
+            });
+        }
 
         try {
             await prisma.user.update({
@@ -162,7 +180,7 @@ UserRouter.patch(
             return res.status(500).json({ error: 'Could not change password' });
         }
 
-        return res.status(200);
+        return res.status(200).json();
     },
 );
 

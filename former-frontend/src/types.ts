@@ -103,7 +103,7 @@ export interface PostState {
     };
 }
 
-export type AlertType = 'Error' | 'Warning';
+export type AlertType = 'Success' | 'Warning' | 'Error';
 
 export interface AlertState {
     alert: { show: boolean; type: AlertType; message: string };

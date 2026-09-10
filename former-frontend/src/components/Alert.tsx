@@ -1,5 +1,5 @@
 import { AnimatePresence, motion } from 'framer-motion';
-import { BsExclamationTriangle, BsXCircle } from 'react-icons/bs';
+import { BsCheckLg, BsExclamationTriangle, BsXCircle } from 'react-icons/bs';
 import { useAlert } from '../store.ts';
 
 const Alert = () => {
@@ -10,15 +10,16 @@ const Alert = () => {
             {show && (
                 <motion.div
                     role="alert"
-                    className={`alert ${type === 'Error' && 'alert-error'} ${type === 'Warning' && 'alert-warning'} fixed bottom-12 left-1/2 z-99 p-4`}
+                    className={`alert ${type === 'Success' && 'alert-success'} ${type === 'Warning' && 'alert-warning'} ${type === 'Error' && 'alert-error'} fixed bottom-12 left-1/2 z-99999 p-4`}
                     initial={{ y: 50, opacity: 0 }}
                     animate={{ y: 0, opacity: 1 }}
                     exit={{ y: 50, opacity: 0 }}
                     transition={{ duration: 0.3, ease: 'easeOut' }}
                     style={{ x: '-50%' }}
                 >
-                    {type === 'Error' && <BsXCircle />}
+                    {type === 'Success' && <BsCheckLg />}
                     {type === 'Warning' && <BsExclamationTriangle />}
+                    {type === 'Error' && <BsXCircle />}
                     <span>{message}</span>
                 </motion.div>
             )}

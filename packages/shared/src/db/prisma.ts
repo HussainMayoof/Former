@@ -26,6 +26,7 @@ const prisma = new PrismaClient({
                         user: {
                             select: {
                                 displayName: true,
+                                username: true,
                             },
                         },
                     },
@@ -41,6 +42,7 @@ const prisma = new PrismaClient({
                         user: {
                             select: {
                                 displayName: true,
+                                username: true,
                             },
                         },
                         tags: {
@@ -60,6 +62,7 @@ const prisma = new PrismaClient({
                         user: {
                             select: {
                                 displayName: true,
+                                username: true,
                             },
                         },
                         tags: {
@@ -90,6 +93,7 @@ const prisma = new PrismaClient({
                                 user: {
                                     select: {
                                         displayName: true,
+                                        username: true,
                                     },
                                 },
                             },

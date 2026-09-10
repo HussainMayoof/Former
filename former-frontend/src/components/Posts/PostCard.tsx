@@ -6,9 +6,10 @@ import type { MouseEvent } from 'react';
 
 interface Props {
     post: Post;
+    showVoteButtons: boolean;
 }
 
-const PostCard = ({ post }: Props) => {
+const PostCard = ({ post, showVoteButtons }: Props) => {
     const navigate = useNavigate();
 
     if (!post) return;
@@ -25,7 +26,7 @@ const PostCard = ({ post }: Props) => {
                 onClick={handleClick}
             >
                 <div>
-                    <UnderlinedLink to={`/users/${post.userId}`}>
+                    <UnderlinedLink to={`/users/${post.user.username}`}>
                         <p className="text-sm duration-200">
                             {post.user.displayName}
                         </p>
@@ -34,13 +35,15 @@ const PostCard = ({ post }: Props) => {
                     <p className="text-xs line-clamp-3">{post.content}</p>
                 </div>
 
-                <div className="self-center me-2">
-                    <VoteButtons
-                        id={post.id}
-                        score={post.score}
-                        userVote={post.userVote}
-                    />
-                </div>
+                {showVoteButtons && (
+                    <div className="self-center me-2">
+                        <VoteButtons
+                            id={post.id}
+                            score={post.score}
+                            userVote={post.userVote}
+                        />
+                    </div>
+                )}
             </div>
 
             <hr className="min-w-3/4 my-1" />

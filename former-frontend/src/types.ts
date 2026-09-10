@@ -58,7 +58,15 @@ export interface AuthenticatedUser {
 export type User = Prisma.UserGetPayload<{
     include: {
         posts: true;
-        comments: true;
+        comments: {
+            include: {
+                post: {
+                    select: {
+                        title: true;
+                    };
+                };
+            };
+        };
     };
     omit: {
         passwordHash: true;

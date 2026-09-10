@@ -38,7 +38,15 @@ UserRouter.get('/:username', async (req, res) => {
         },
         include: {
             posts: true,
-            comments: true,
+            comments: {
+                include: {
+                    post: {
+                        select: {
+                            title: true,
+                        },
+                    },
+                },
+            },
         },
         omit: {
             passwordHash: true,
